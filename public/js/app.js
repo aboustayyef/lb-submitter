@@ -63,17 +63,127 @@
 /******/ 	__webpack_require__.p = "./";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 31);
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__categories__ = __webpack_require__(33);
+
+/**
+ * First we will load all of this project's JavaScript dependencies which
+ * includes Vue and other libraries. It is a great starting point when
+ * building robust, powerful web applications using Vue and Laravel.
+ */
+
+__webpack_require__(32);
+
+
+console.log(__WEBPACK_IMPORTED_MODULE_0__categories__["a" /* default */]);
+
+var app = new Vue({
+	el: "#app",
+	data: {
+		url: '',
+		urlButtonText: 'Submit',
+		urlButtonIsLoading: false,
+		urlDetails: {},
+		blogDetailsEnabled: false,
+		blogDomain: "",
+		blogTitle: "",
+		blogDescription: "",
+		blogRss: "",
+		categories: __WEBPACK_IMPORTED_MODULE_0__categories__["a" /* default */],
+		checkedCategories: ["society"]
+	},
+
+	computed: {
+		rssIsURL: function rssIsURL() {
+			if (this.blogRss.match(/^(https?:\/\/)?([\da-z\.-]+\.[a-z\.]{2,6}|[\d\.]+)([\/:?=&#]{1}[\da-z\.-]+)*[\/\?]?$/i)) {
+				return true;
+			}
+			return false;
+		}
+	},
+
+	methods: {
+
+		//code to activate submit button and to listen to key events on url field
+		updateButton: function updateButton(e) {
+			var key = e.code;
+			if (key == 'Enter') {
+				this.getUrlDetails();
+			};
+		},
+
+		getUrlDetails: function getUrlDetails() {
+			// show loading spinner
+			this.urlButtonIsLoading = true;
+			// clear search field
+			var urlToUse = this.url;
+			this.url = '';
+
+			// hide details panel if previously existed
+			this.blogDetailsEnabled = false;
+
+			// request data from api
+			var theapp = this; // axios enclosure will no longer have access to "this"
+
+			axios.get('/api/urlDetails?url=' + urlToUse).then(function (response) {
+
+				// remove loading spinner
+				theapp.urlButtonIsLoading = false;
+				theapp.urlButtonText = "Refresh";
+
+				if (response.data.status != 'error') {
+					theapp.blogDetailsEnabled = true;
+					theapp.blogTitle = response.data.result.title;
+					theapp.blogDescription = response.data.result.description;
+					theapp.blogRss = response.data.result.feed;
+				}
+			}).catch(function (error) {
+				console.log(error);
+			});
+		},
+
+		// makes sure user doesn't select more than two categories
+		guardCategoriesMaximum: function guardCategoriesMaximum() {
+			if (this.checkedCategories.length > 2) {
+				this.checkedCategories.splice(-1, 1);
+			}
+		}
+	}
+});
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(0);
+module.exports = __webpack_require__(1);
+
+
+/***/ }),
+/* 3 */,
+/* 4 */,
+/* 5 */,
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var bind = __webpack_require__(7);
+var bind = __webpack_require__(13);
 
 /*global toString:true*/
 
@@ -373,14 +483,14 @@ module.exports = {
 
 
 /***/ }),
-/* 1 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {
 
-var utils = __webpack_require__(0);
-var normalizeHeaderName = __webpack_require__(25);
+var utils = __webpack_require__(6);
+var normalizeHeaderName = __webpack_require__(29);
 
 var PROTECTION_PREFIX = /^\)\]\}',?\n/;
 var DEFAULT_CONTENT_TYPE = {
@@ -397,10 +507,10 @@ function getDefaultAdapter() {
   var adapter;
   if (typeof XMLHttpRequest !== 'undefined') {
     // For browsers use XHR adapter
-    adapter = __webpack_require__(3);
+    adapter = __webpack_require__(9);
   } else if (typeof process !== 'undefined') {
     // For node use HTTP adapter
-    adapter = __webpack_require__(3);
+    adapter = __webpack_require__(9);
   }
   return adapter;
 }
@@ -471,10 +581,10 @@ utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
 
 module.exports = defaults;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8)))
 
 /***/ }),
-/* 2 */
+/* 8 */
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -660,19 +770,19 @@ process.umask = function() { return 0; };
 
 
 /***/ }),
-/* 3 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {
 
-var utils = __webpack_require__(0);
-var settle = __webpack_require__(17);
-var buildURL = __webpack_require__(20);
-var parseHeaders = __webpack_require__(26);
-var isURLSameOrigin = __webpack_require__(24);
-var createError = __webpack_require__(6);
-var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(19);
+var utils = __webpack_require__(6);
+var settle = __webpack_require__(21);
+var buildURL = __webpack_require__(24);
+var parseHeaders = __webpack_require__(30);
+var isURLSameOrigin = __webpack_require__(28);
+var createError = __webpack_require__(12);
+var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(23);
 
 module.exports = function xhrAdapter(config) {
   return new Promise(function dispatchXhrRequest(resolve, reject) {
@@ -768,7 +878,7 @@ module.exports = function xhrAdapter(config) {
     // This is only done if running in a standard browser environment.
     // Specifically not if we're in a web worker, or react-native.
     if (utils.isStandardBrowserEnv()) {
-      var cookies = __webpack_require__(22);
+      var cookies = __webpack_require__(26);
 
       // Add xsrf header
       var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
@@ -842,10 +952,10 @@ module.exports = function xhrAdapter(config) {
   });
 };
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8)))
 
 /***/ }),
-/* 4 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -871,7 +981,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 5 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -883,13 +993,13 @@ module.exports = function isCancel(value) {
 
 
 /***/ }),
-/* 6 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var enhanceError = __webpack_require__(16);
+var enhanceError = __webpack_require__(20);
 
 /**
  * Create an Error with the specified message, config, error code, and response.
@@ -907,7 +1017,7 @@ module.exports = function createError(message, config, code, response) {
 
 
 /***/ }),
-/* 7 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -925,112 +1035,22 @@ module.exports = function bind(fn, thisArg) {
 
 
 /***/ }),
-/* 8 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__categories__ = __webpack_require__(35);
-
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
-
-__webpack_require__(28);
-
-
-console.log(__WEBPACK_IMPORTED_MODULE_0__categories__["a" /* default */]);
-
-var app = new Vue({
-	el: "#app",
-	data: {
-		url: '',
-		urlButtonText: 'Submit',
-		urlButtonIsLoading: false,
-		urlDetails: {},
-		blogDetailsEnabled: false,
-		blogDomain: "",
-		blogTitle: "",
-		blogDescription: "",
-		blogRss: "",
-		categories: __WEBPACK_IMPORTED_MODULE_0__categories__["a" /* default */],
-		checkedCategories: ["society"]
-	},
-
-	methods: {
-
-		//code to activate submit button and to listen to key events on url field
-		updateButton: function updateButton(e) {
-			var key = e.code;
-			if (key == 'Enter') {
-				this.getUrlDetails();
-			};
-		},
-
-		getUrlDetails: function getUrlDetails() {
-			// show loading spinner
-			this.urlButtonIsLoading = true;
-			// clear search field
-			var urlToUse = this.url;
-			this.url = '';
-
-			// hide details panel if previously existed
-			this.blogDetailsEnabled = false;
-
-			// request data from api
-			var theapp = this; // axios enclosure will no longer have access to "this"
-
-			axios.get('/api/urlDetails?url=' + urlToUse).then(function (response) {
-
-				// remove loading spinner
-				theapp.urlButtonIsLoading = false;
-				theapp.urlButtonText = "Refresh";
-
-				if (response.data.status != 'error') {
-					theapp.blogDetailsEnabled = true;
-					theapp.blogTitle = response.data.result.title;
-					theapp.blogDescription = response.data.result.description;
-					theapp.blogRss = response.data.result.feed;
-				}
-			}).catch(function (error) {
-				console.log(error);
-			});
-		},
-
-		// makes sure user doesn't select more than two categories
-		guardCategoriesMaximum: function guardCategoriesMaximum() {
-			if (this.checkedCategories.length > 2) {
-				this.checkedCategories.splice(-1, 1);
-			}
-		}
-	}
-});
-
-/***/ }),
-/* 9 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 10 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(11);
+module.exports = __webpack_require__(15);
 
 /***/ }),
-/* 11 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(0);
-var bind = __webpack_require__(7);
-var Axios = __webpack_require__(13);
-var defaults = __webpack_require__(1);
+var utils = __webpack_require__(6);
+var bind = __webpack_require__(13);
+var Axios = __webpack_require__(17);
+var defaults = __webpack_require__(7);
 
 /**
  * Create an instance of Axios
@@ -1063,15 +1083,15 @@ axios.create = function create(instanceConfig) {
 };
 
 // Expose Cancel & CancelToken
-axios.Cancel = __webpack_require__(4);
-axios.CancelToken = __webpack_require__(12);
-axios.isCancel = __webpack_require__(5);
+axios.Cancel = __webpack_require__(10);
+axios.CancelToken = __webpack_require__(16);
+axios.isCancel = __webpack_require__(11);
 
 // Expose all/spread
 axios.all = function all(promises) {
   return Promise.all(promises);
 };
-axios.spread = __webpack_require__(27);
+axios.spread = __webpack_require__(31);
 
 module.exports = axios;
 
@@ -1080,13 +1100,13 @@ module.exports.default = axios;
 
 
 /***/ }),
-/* 12 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var Cancel = __webpack_require__(4);
+var Cancel = __webpack_require__(10);
 
 /**
  * A `CancelToken` is an object that can be used to request cancellation of an operation.
@@ -1144,18 +1164,18 @@ module.exports = CancelToken;
 
 
 /***/ }),
-/* 13 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var defaults = __webpack_require__(1);
-var utils = __webpack_require__(0);
-var InterceptorManager = __webpack_require__(14);
-var dispatchRequest = __webpack_require__(15);
-var isAbsoluteURL = __webpack_require__(23);
-var combineURLs = __webpack_require__(21);
+var defaults = __webpack_require__(7);
+var utils = __webpack_require__(6);
+var InterceptorManager = __webpack_require__(18);
+var dispatchRequest = __webpack_require__(19);
+var isAbsoluteURL = __webpack_require__(27);
+var combineURLs = __webpack_require__(25);
 
 /**
  * Create a new instance of Axios
@@ -1236,13 +1256,13 @@ module.exports = Axios;
 
 
 /***/ }),
-/* 14 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(0);
+var utils = __webpack_require__(6);
 
 function InterceptorManager() {
   this.handlers = [];
@@ -1295,16 +1315,16 @@ module.exports = InterceptorManager;
 
 
 /***/ }),
-/* 15 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(0);
-var transformData = __webpack_require__(18);
-var isCancel = __webpack_require__(5);
-var defaults = __webpack_require__(1);
+var utils = __webpack_require__(6);
+var transformData = __webpack_require__(22);
+var isCancel = __webpack_require__(11);
+var defaults = __webpack_require__(7);
 
 /**
  * Throws a `Cancel` if cancellation has been requested.
@@ -1381,7 +1401,7 @@ module.exports = function dispatchRequest(config) {
 
 
 /***/ }),
-/* 16 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1407,13 +1427,13 @@ module.exports = function enhanceError(error, config, code, response) {
 
 
 /***/ }),
-/* 17 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var createError = __webpack_require__(6);
+var createError = __webpack_require__(12);
 
 /**
  * Resolve or reject a Promise based on response status.
@@ -1439,13 +1459,13 @@ module.exports = function settle(resolve, reject, response) {
 
 
 /***/ }),
-/* 18 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(0);
+var utils = __webpack_require__(6);
 
 /**
  * Transform the data for a request or a response
@@ -1466,7 +1486,7 @@ module.exports = function transformData(data, headers, fns) {
 
 
 /***/ }),
-/* 19 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1509,13 +1529,13 @@ module.exports = btoa;
 
 
 /***/ }),
-/* 20 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(0);
+var utils = __webpack_require__(6);
 
 function encode(val) {
   return encodeURIComponent(val).
@@ -1584,7 +1604,7 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 
 
 /***/ }),
-/* 21 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1603,13 +1623,13 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 
 
 /***/ }),
-/* 22 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(0);
+var utils = __webpack_require__(6);
 
 module.exports = (
   utils.isStandardBrowserEnv() ?
@@ -1663,7 +1683,7 @@ module.exports = (
 
 
 /***/ }),
-/* 23 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1684,13 +1704,13 @@ module.exports = function isAbsoluteURL(url) {
 
 
 /***/ }),
-/* 24 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(0);
+var utils = __webpack_require__(6);
 
 module.exports = (
   utils.isStandardBrowserEnv() ?
@@ -1759,13 +1779,13 @@ module.exports = (
 
 
 /***/ }),
-/* 25 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(0);
+var utils = __webpack_require__(6);
 
 module.exports = function normalizeHeaderName(headers, normalizedName) {
   utils.forEach(headers, function processHeader(value, name) {
@@ -1778,13 +1798,13 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 
 
 /***/ }),
-/* 26 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(0);
+var utils = __webpack_require__(6);
 
 /**
  * Parse headers into an object
@@ -1822,7 +1842,7 @@ module.exports = function parseHeaders(headers) {
 
 
 /***/ }),
-/* 27 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1856,7 +1876,7 @@ module.exports = function spread(callback) {
 
 
 /***/ }),
-/* 28 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -1865,7 +1885,7 @@ module.exports = function spread(callback) {
  * and simple, leaving you to focus on building your next great project.
  */
 
-window.Vue = __webpack_require__(29);
+window.Vue = __webpack_require__(34);
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
@@ -1873,7 +1893,7 @@ window.Vue = __webpack_require__(29);
  * CSRF token as a header based on the value of the "XSRF" token cookie.
  */
 
-window.axios = __webpack_require__(10);
+window.axios = __webpack_require__(14);
 
 window.axios.defaults.headers.common = {
   'X-CSRF-TOKEN': window.Laravel.csrfToken,
@@ -1881,7 +1901,36 @@ window.axios.defaults.headers.common = {
 };
 
 /***/ }),
-/* 29 */
+/* 33 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+var categories = [{
+  'name': 'society',
+  'description': 'Society & Fun'
+}, {
+  'name': 'design',
+  'description': 'Marketing & Design'
+}, {
+  'name': 'fashion',
+  'description': 'Fashion & Style'
+}, {
+  'name': 'food',
+  'description': 'Food & Health'
+}, {
+  'name': 'politics',
+  'description': 'Politics & News'
+}, {
+  'name': 'tech',
+  'description': 'Tech & Business'
+}, {
+  'name': 'media',
+  'description': 'Music, TV & Film'
+}];
+/* harmony default export */ __webpack_exports__["a"] = categories;
+
+/***/ }),
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10454,10 +10503,10 @@ Vue$3.compile = compileToFunctions;
 
 module.exports = Vue$3;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(30)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8), __webpack_require__(35)))
 
 /***/ }),
-/* 30 */
+/* 35 */
 /***/ (function(module, exports) {
 
 var g;
@@ -10482,46 +10531,6 @@ try {
 
 module.exports = g;
 
-
-/***/ }),
-/* 31 */
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(8);
-module.exports = __webpack_require__(9);
-
-
-/***/ }),
-/* 32 */,
-/* 33 */,
-/* 34 */,
-/* 35 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-var categories = [{
-  'name': 'society',
-  'description': 'Society & Fun'
-}, {
-  'name': 'design',
-  'description': 'Marketing & Design'
-}, {
-  'name': 'fashion',
-  'description': 'Fashion & Style'
-}, {
-  'name': 'food',
-  'description': 'Food & Health'
-}, {
-  'name': 'politics',
-  'description': 'Politics & News'
-}, {
-  'name': 'tech',
-  'description': 'Tech & Business'
-}, {
-  'name': 'media',
-  'description': 'Music, TV & Film'
-}];
-/* harmony default export */ __webpack_exports__["a"] = categories;
 
 /***/ })
 /******/ ]);

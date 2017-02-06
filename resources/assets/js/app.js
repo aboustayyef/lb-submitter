@@ -25,6 +25,15 @@ let app = new Vue({
 		categories: categories,
 		checkedCategories:["society"]
 	},
+
+	computed: {
+		rssIsURL: function(){
+			if (this.blogRss.match(/^(https?:\/\/)?([\da-z\.-]+\.[a-z\.]{2,6}|[\d\.]+)([\/:?=&#]{1}[\da-z\.-]+)*[\/\?]?$/i)) {
+				return true;
+			}
+			return false;
+		}
+	},
 	
 	methods:{
 		

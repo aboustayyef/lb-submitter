@@ -46,8 +46,9 @@
                         </p>
                         <label class="label">Blog RSS</label>
                         <p class="control">
-                          <input :class="{ 'input':true, 'is-danger': blogRss == null || blogRss == ''}" v-model="blogRss" type="text">
+                          <input :class="{ 'input':true, 'is-danger': blogRss == null || blogRss == '' || ! rssIsURL}" v-model="blogRss" type="text">
                           <span class="help is-danger" v-if="blogRss == null || blogRss == ''">This is a required field</span>
+                          <span class="help is-danger" v-if="!rssIsURL">This has to be a URL</span>
                         </p>
                         <label class="label">Pick Categories (Maximum 2)</label>
                         <p class="control" v-for="category in categories">
@@ -56,6 +57,7 @@
                             @{{category.description}}
                           </label>
                         </p>
+                        <span class="help is-danger" v-if="checkedCategories.length == 0 ">You need to choose at least one category</span>
                     </div>
                     <div class="column"></div> <!-- Second column -->
                 </div>
