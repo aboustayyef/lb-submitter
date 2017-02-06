@@ -6,6 +6,9 @@
  */
 
 require('./bootstrap');
+import categories from './categories';
+
+console.log(categories);
 
 let app = new Vue({
 	el: "#app",
@@ -19,6 +22,8 @@ let app = new Vue({
 		blogTitle:"",
 		blogDescription:"",
 		blogRss:"",
+		categories: categories,
+		checkedCategories:["society"]
 	},
 	
 	methods:{
@@ -36,9 +41,13 @@ let app = new Vue({
 			let urlToUse = this.url;
 			this.url = '';
 
+			// hide details panel if previously existed
+			this.blogDetailsEnabled = false;
+
 
 			// request data from api
-			let theapp = this;
+			let theapp = this; // axios enclosure will no longer have access to "this"
+
 			axios.get('/api/urlDetails?url=' + urlToUse)
 			  .then(function (response) {
 
@@ -57,6 +66,13 @@ let app = new Vue({
 			  .catch(function (error) {
 			    console.log(error);
 			  });
+		},
+
+		// makes sure user doesn't select more than two categories
+		guardCategoriesMaximum: function(){
+			if (this.checkedCategories.length > 2) {
+				this.checkedCategories.splice(-1,1);
+			}
 		}
 	}
 });
