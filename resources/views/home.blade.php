@@ -21,7 +21,7 @@
                 <p class="control">
                   <input @keyup="updateButton" class="input" v-model="url" type="text" placeholder="Text input">
                 </p>
-                <button id="submit1" @click="getUrlDetails" :class="{'button is-primary' : true , 'is-disabled' : url == null || url == '', 'is-loading' : urlButtonIsLoading}" v-text="urlButtonText" ></button>
+                <button id="submit1" @click="getUrlDetails" :class="{'button is-primary' : true , 'is-disabled' : url == null || url == '' || !submittedUrlIsUrl, 'is-loading' : urlButtonIsLoading}" v-text="urlButtonText" ></button>
                 
             </div>
         </div>

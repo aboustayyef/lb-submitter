@@ -8,41 +8,55 @@
 require('./bootstrap');
 import categories from './categories';
 
-console.log(categories);
+// utility function to return true or false if a string is a url
+let isUrl = function($st){
+	if ($st.match(/^(https?:\/\/)?([\da-z\.-]+\.[a-z\.]{2,6}|[\d\.]+)([\/:?=&#]{1}[\da-z\.-]+)*[\/\?]?$/i)) {
+		return true;
+	}
+	return false;
+}
+
 
 let app = new Vue({
+
 	el: "#app",
+
 	data: {
-		url: '',
-		urlButtonText: 'Submit',
-		urlButtonIsLoading: false,
-		urlDetails:{},
-		blogDetailsEnabled:false,
-		blogDomain:"",
-		blogTitle:"",
-		blogDescription:"",
-		blogRss:"",
-		categories: categories,
-		checkedCategories:["society"]
+		url: '', 							// submitted url 
+		urlButtonText: 'Submit', 			// Text shown on the url submit button 
+		urlButtonIsLoading: false,			// when this value is true, the button shows a loading spinner
+
+		blogDetailsEnabled:false,			// when this value is false, the blog details pannel is hidden			
+		blogDomain:"",						// the url of the blog
+		blogTitle:"",						// the title of the blog
+		blogDescription:"",					// the description of the blog
+		blogRss:"",							// the rss feed of the blog
+
+		categories: categories,				// the list of categories, as imported from categories.js file
+		checkedCategories:["society"]		// an array of categories checked. by default, has society.
 	},
 
 	computed: {
+
+		submittedUrlIsUrl: function(){
+			return isUrl(this.url);
+		},
+		
 		rssIsURL: function(){
-			if (this.blogRss.match(/^(https?:\/\/)?([\da-z\.-]+\.[a-z\.]{2,6}|[\d\.]+)([\/:?=&#]{1}[\da-z\.-]+)*[\/\?]?$/i)) {
-				return true;
-			}
-			return false;
+			return isUrl(this.blogRss);
 		}
 	},
 	
 	methods:{
 		
-		//code to activate submit button and to listen to key events on url field
+		// listening to key events on url field
+		
 		updateButton: function(e){
 			let key = e.code;
 			if (key == 'Enter') {this.getUrlDetails()};
 		},
 
+		
 		getUrlDetails: function(){
 			// show loading spinner
 			this.urlButtonIsLoading = true;
