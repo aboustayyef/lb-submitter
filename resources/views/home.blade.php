@@ -17,9 +17,8 @@
         <div class="section">
             <div class="container">
                 <h1 class="title is-1">Submit your blog!</h1>
-                <label class="label">Enter URL</label>
                 <p class="control">
-                  <input @keyup="updateButton" class="input" v-model="url" type="text" placeholder="Text input">
+                  <input @keyup="updateButton" class="input" v-model="url" type="text" placeholder="Enter URL here">
                 </p>
                 <button id="submit1" @click="getUrlDetails" :class="{'button is-primary' : true , 'is-disabled' : url == null || url == '' || !submittedUrlIsUrl, 'is-loading' : urlButtonIsLoading}" v-text="urlButtonText" ></button>
                 
