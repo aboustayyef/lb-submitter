@@ -10,7 +10,7 @@ use Symfony\Component\DomCrawler\Crawler ;
 */
 class UrlAnalyzer
 {
-	public $status, $errorMessages, $result, $domain; 
+	public $status, $errorMessages, $result; 
 	private $html, $guzzleClient, $guzzleResponse, $crawler;
 
 	function __construct($url)
@@ -25,7 +25,7 @@ class UrlAnalyzer
 			return $this->abort('URL is not valid');
 		}
 
-		$this->domain = $this->getDomain($url);
+		$this->result['domain'] = $this->getDomain($url);
 
 		// Check url is accessible
 		$guzzleClient = new \GuzzleHttp\Client();

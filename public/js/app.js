@@ -1016,6 +1016,7 @@ var app = new Vue({
 					theapp.blogUniqueWord = response.data.result.domain;
 					theapp.blogDescription = response.data.result.description;
 					theapp.blogRss = response.data.result.feed;
+					console.log(response.data);
 				}
 			}).catch(function (error) {
 				console.log(error);
