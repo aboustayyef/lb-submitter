@@ -38,6 +38,11 @@
                           <input :class="{ 'input':true, 'is-danger': blogTitle == null || blogTitle == ''}" v-model="blogTitle" type="text">
                           <span class="help is-danger" v-if="blogTitle == null || blogTitle == ''">This is a required field</span>
                         </p>
+                        <label class="label">Unique Blog username</label>
+                        <p class="control">
+                          <input :class="{ 'input':true, 'is-danger': blogUniqueWord == null || blogUniqueWord == ''}" v-model="blogUniqueWord" type="text">
+                          <span class="help is-danger" v-if="blogUniqueWord == null || blogUniqueWord == ''">This is a required field</span>
+                        </p>
                         <label class="label">Blog Description</label>
                         <p class="control">
                           <input :class="{ 'input':true, 'is-danger': blogDescription == null || blogDescription == ''}" v-model="blogDescription" type="text">

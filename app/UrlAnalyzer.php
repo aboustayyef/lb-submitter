@@ -10,7 +10,7 @@ use Symfony\Component\DomCrawler\Crawler ;
 */
 class UrlAnalyzer
 {
-	public $status, $errorMessages, $result; 
+	public $status, $errorMessages, $result, $domain; 
 	private $html, $guzzleClient, $guzzleResponse, $crawler;
 
 	function __construct($url)
@@ -24,6 +24,8 @@ class UrlAnalyzer
 		if (!$this->urlIsValid($url)) {
 			return $this->abort('URL is not valid');
 		}
+
+		$this->domain = $this->getDomain($url);
 
 		// Check url is accessible
 		$guzzleClient = new \GuzzleHttp\Client();
@@ -84,6 +86,35 @@ class UrlAnalyzer
 			$this->status = 'warning';
 	    	$this->errorMessages[] = 'Could not automatically extract RSS Feed';
 		}
+	}
+
+	private function getDomain($url)
+	{
+		# http://www.beirutspring.com -> beirutspring
+		# picks longest string in host and returns it
+
+		$parsed = parse_url($url);
+		
+		if (isset($parsed['host'])) {
+			$host = $parsed['host'];
+		} else {
+			$host = $parsed['path'];
+		}
+
+		$candidates = explode('.', $host);
+
+		$recordLength = 0;
+		$result = '';
+
+		foreach ($candidates as $candidate) {
+			if (strlen($candidate) > $recordLength) {
+				$result = $candidate;
+				$recordLength = strlen($candidate);
+			}
+		}
+
+		return $result;
+
 	}
 
 }

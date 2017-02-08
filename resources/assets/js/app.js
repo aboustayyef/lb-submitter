@@ -27,6 +27,7 @@ let app = new Vue({
 		urlButtonIsLoading: false,			// when this value is true, the button shows a loading spinner
 
 		blogDetailsEnabled:false,			// when this value is false, the blog details pannel is hidden			
+		blogUniqueWord:'',					// the unique blog username (example: beirutspring)
 		blogDomain:"",						// the url of the blog
 		blogTitle:"",						// the title of the blog
 		blogDescription:"",					// the description of the blog
@@ -81,6 +82,7 @@ let app = new Vue({
 			    if (response.data.status != 'error') {
 				    theapp.blogDetailsEnabled = true;
 				    theapp.blogTitle = response.data.result.title;
+				    theapp.blogUniqueWord = response.data.result.domain;
 				    theapp.blogDescription = response.data.result.description;
 				    theapp.blogRss = response.data.result.feed;
 			    }
