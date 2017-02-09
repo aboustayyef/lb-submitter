@@ -1,6 +1,7 @@
 √ unique blogname (beirutspring)
 √ access to db
 
+-- make sure that unique blogname is one word only
 -- get twitter username
 -- ability to check if submitted blog exists
 -- ability to preview RSS feed
