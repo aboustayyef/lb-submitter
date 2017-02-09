@@ -40,8 +40,9 @@
                         </p>
                         <label class="label">Unique Blog username</label>
                         <p class="control">
-                          <input :class="{ 'input':true, 'is-danger': blogUniqueWord == null || blogUniqueWord == ''}" v-model="blogUniqueWord" type="text">
+                          <input :class="{ 'input':true, 'is-danger': blogUniqueWord == null || blogUniqueWord == '' || uniqueWordContainsIllegalCharacters }" v-model="blogUniqueWord" type="text">
                           <span class="help is-danger" v-if="blogUniqueWord == null || blogUniqueWord == ''">This is a required field</span>
+                          <span class="help is-danger" v-if="uniqueWordContainsIllegalCharacters">Can only use letters and numbers</span>
                         </p>
                         <label class="label">Blog Description</label>
                         <p class="control">

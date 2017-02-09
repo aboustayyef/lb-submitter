@@ -16,6 +16,12 @@ let isUrl = function($st){
 	return false;
 }
 
+let isAlphaNumeric = function($st){
+	if ($st.match(/^([0-9]|[a-z])+([0-9a-z]+)$/i)) {
+		return true;
+	}
+	return false;
+};
 
 let app = new Vue({
 
@@ -45,6 +51,10 @@ let app = new Vue({
 		
 		rssIsURL: function(){
 			return isUrl(this.blogRss);
+		},
+
+		uniqueWordContainsIllegalCharacters: function(){
+			return ! isAlphaNumeric(this.blogUniqueWord);
 		}
 	},
 	

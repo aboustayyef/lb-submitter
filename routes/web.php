@@ -18,6 +18,14 @@ Route::get('/', function () {
 });
 
 Route::get('/api/urlDetails', function(Request $request){
+
 	$response= new App\UrlAnalyzer($request->get('url'));
+	return response()->json($response);
+});
+
+
+Route::get('/api/feedDetails', function(Request $request){
+
+	$response= new App\FeedFetcher($request->get('url'));
 	return response()->json($response);
 });

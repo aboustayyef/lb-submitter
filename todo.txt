@@ -1,10 +1,10 @@
 √ unique blogname (beirutspring)
 √ access to db
+√ make sure that unique blogname is one word only
+x ability to check if submitted blog exists (not necessary - will check at confirmation stage)
 
--- make sure that unique blogname is one word only
+-- (work in progress) ability to preview RSS feed
 -- get twitter username
--- ability to check if submitted blog exists
--- ability to preview RSS feed
 -- if everything ok, allow to submit blog
 -- when submitted, blog will be added to db, with crawling set to "inactive"
 -- add admin interface to approve submitted blogs

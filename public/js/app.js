@@ -949,6 +949,13 @@ var isUrl = function isUrl($st) {
 	return false;
 };
 
+var isAlphaNumeric = function isAlphaNumeric($st) {
+	if ($st.match(/^([0-9]|[a-z])+([0-9a-z]+)$/i)) {
+		return true;
+	}
+	return false;
+};
+
 var app = new Vue({
 
 	el: "#app",
@@ -977,6 +984,10 @@ var app = new Vue({
 
 		rssIsURL: function rssIsURL() {
 			return isUrl(this.blogRss);
+		},
+
+		uniqueWordContainsIllegalCharacters: function uniqueWordContainsIllegalCharacters() {
+			return !isAlphaNumeric(this.blogUniqueWord);
 		}
 	},
 
