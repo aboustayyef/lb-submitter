@@ -971,6 +971,7 @@ var app = new Vue({
 		blogTitle: "", // the title of the blog
 		blogDescription: "", // the description of the blog
 		blogRss: "", // the rss feed of the blog
+		blogPosts: [], // the list of posts
 
 		categories: __WEBPACK_IMPORTED_MODULE_0__categories__["a" /* default */], // the list of categories, as imported from categories.js file
 		checkedCategories: ["society"] // an array of categories checked. by default, has society.
@@ -1003,6 +1004,8 @@ var app = new Vue({
 		},
 
 		getUrlDetails: function getUrlDetails() {
+			var _this = this;
+
 			// show loading spinner
 			this.urlButtonIsLoading = true;
 			// clear search field
@@ -1013,24 +1016,34 @@ var app = new Vue({
 			this.blogDetailsEnabled = false;
 
 			// request data from api
-			var theapp = this; // axios enclosure will no longer have access to "this"
 
 			axios.get('/api/urlDetails?url=' + urlToUse).then(function (response) {
 
 				// remove loading spinner
-				theapp.urlButtonIsLoading = false;
-				theapp.urlButtonText = "Refresh";
+				_this.urlButtonIsLoading = false;
+				_this.urlButtonText = "Refresh";
 
 				if (response.data.status != 'error') {
-					theapp.blogDetailsEnabled = true;
-					theapp.blogTitle = response.data.result.title;
-					theapp.blogUniqueWord = response.data.result.domain;
-					theapp.blogDescription = response.data.result.description;
-					theapp.blogRss = response.data.result.feed;
-					console.log(response.data);
+					_this.blogDetailsEnabled = true;
+					_this.blogTitle = response.data.result.title;
+					_this.blogUniqueWord = response.data.result.domain;
+					_this.blogDescription = response.data.result.description;
+					_this.blogRss = response.data.result.feed;
+					_this.getRssContent();
 				}
 			}).catch(function (error) {
 				console.log(error);
+			});
+		},
+
+		getRssContent: function getRssContent() {
+			var _this2 = this;
+
+			this.blogPosts = [];
+			axios.get('/api/feedDetails?url=' + this.blogRss).then(function (response) {
+				if (response.data.status == 'ok') {
+					_this2.blogPosts = response.data.finalItems;
+				}
 			});
 		},
 

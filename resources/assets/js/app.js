@@ -38,6 +38,7 @@ let app = new Vue({
 		blogTitle:"",						// the title of the blog
 		blogDescription:"",					// the description of the blog
 		blogRss:"",							// the rss feed of the blog
+		blogPosts: [],						// the list of posts
 
 		categories: categories,				// the list of categories, as imported from categories.js file
 		checkedCategories:["society"]		// an array of categories checked. by default, has society.
@@ -80,22 +81,21 @@ let app = new Vue({
 
 
 			// request data from api
-			let theapp = this; // axios enclosure will no longer have access to "this"
 
 			axios.get('/api/urlDetails?url=' + urlToUse)
-			  .then(function (response) {
+			  .then( (response) => {
 
 			    // remove loading spinner
-			    theapp.urlButtonIsLoading = false;
-			    theapp.urlButtonText = "Refresh";
+			    this.urlButtonIsLoading = false;
+			    this.urlButtonText = "Refresh";
 
 			    if (response.data.status != 'error') {
-				    theapp.blogDetailsEnabled = true;
-				    theapp.blogTitle = response.data.result.title;
-				    theapp.blogUniqueWord = response.data.result.domain;
-				    theapp.blogDescription = response.data.result.description;
-				    theapp.blogRss = response.data.result.feed;
-				    console.log(response.data);
+				    this.blogDetailsEnabled = true;
+				    this.blogTitle = response.data.result.title;
+				    this.blogUniqueWord = response.data.result.domain;
+				    this.blogDescription = response.data.result.description;
+				    this.blogRss = response.data.result.feed;
+				    this.getRssContent();
 			    }
 
 			  })
@@ -103,6 +103,16 @@ let app = new Vue({
 			    console.log(error);
 			  });
 		},
+
+		getRssContent: function(){
+			this.blogPosts = [];
+			axios.get('/api/feedDetails?url=' + this.blogRss)
+			     .then((response) => {
+			     	if (response.data.status == 'ok') {
+				     	this.blogPosts = response.data.finalItems;
+			     	}
+			     }
+		)},
 
 		// makes sure user doesn't select more than two categories
 		guardCategoriesMaximum: function(){

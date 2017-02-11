@@ -49,12 +49,7 @@
                           <input :class="{ 'input':true, 'is-danger': blogDescription == null || blogDescription == ''}" v-model="blogDescription" type="text">
                           <span class="help is-danger" v-if="blogDescription == null || blogDescription == ''">This is a required field</span>
                         </p>
-                        <label class="label">Blog RSS</label>
-                        <p class="control">
-                          <input :class="{ 'input':true, 'is-danger': blogRss == null || blogRss == '' || ! rssIsURL}" v-model="blogRss" type="text">
-                          <span class="help is-danger" v-if="blogRss == null || blogRss == ''">This is a required field</span>
-                          <span class="help is-danger" v-if="!rssIsURL">This has to be a URL</span>
-                        </p>
+
                         <label class="label">Pick Categories (Maximum 2)</label>
                         <p class="control" v-for="category in categories">
                           <label class="checkbox">
@@ -63,8 +58,29 @@
                           </label>
                         </p>
                         <span class="help is-danger" v-if="checkedCategories.length == 0 ">You need to choose at least one category</span>
+                        
+           
                     </div>
-                    <div class="column"></div> <!-- Second column -->
+                    <div class="column">
+                        <div class="panel">
+                            <p class="panel-heading">
+                                Blog RSS
+                            </p>
+                            <div class="panel-block">
+                                <p class="control">
+                                  <input :class="{ 'input':true, 'is-danger': blogRss == null || blogRss == '' || ! rssIsURL}" v-model="blogRss" type="text" @blur="getRssContent">
+                                  <span class="help is-danger" v-if="blogRss == null || blogRss == ''">This is a required field</span>
+                                  <span class="help is-danger" v-if="!rssIsURL">This has to be a URL</span>
+                                </p>
+                            </div>
+                            <div v-if="rssIsURL && blogPosts.length == 0 ">
+                                <button class="button is-primary is-loading">&nbsp;</button> Loading your RSS content
+                            </div>
+                            <div v-for="post in blogPosts">
+                                 <a class="panel-block" :href="post.url" >@{{post.title}}</a>
+                            </div>
+                        </div>
+                    </div> <!-- Second column -->
                 </div>
 
             </div>
