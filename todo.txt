@@ -2,9 +2,9 @@
 √ access to db
 √ make sure that unique blogname is one word only
 √ ability to preview RSS feed
+√ replace custom validations with vee-validate.com library
 x ability to check if submitted blog exists (not necessary - will check at confirmation stage)
 
--- replace custom validations with vee-validate.com library
 -- get twitter username
 -- drag and drop images?
 -- if everything ok, allow to submit blog

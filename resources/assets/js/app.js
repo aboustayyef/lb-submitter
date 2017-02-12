@@ -7,21 +7,10 @@
 
 require('./bootstrap');
 import categories from './categories';
+import VeeValidate from 'vee-validate';
 
-// utility function to return true or false if a string is a url
-let isUrl = function($st){
-	if ($st.match(/^(https?:\/\/)?([\da-z\.-]+\.[a-z\.]{2,6}|[\d\.]+)([\/:?=&#]{1}[\da-z\.-]+)*[\/\?]?$/i)) {
-		return true;
-	}
-	return false;
-}
-
-let isAlphaNumeric = function($st){
-	if ($st.match(/^([0-9]|[a-z])+([0-9a-z]+)$/i)) {
-		return true;
-	}
-	return false;
-};
+// validation library
+Vue.use(VeeValidate);
 
 let app = new Vue({
 
@@ -43,21 +32,6 @@ let app = new Vue({
 
 		categories: categories,				// the list of categories, as imported from categories.js file
 		checkedCategories:["society"]		// an array of categories checked. by default, has society.
-	},
-
-	computed: {
-
-		submittedUrlIsUrl: function(){
-			return isUrl(this.url);
-		},
-		
-		rssIsURL: function(){
-			return isUrl(this.blogRss);
-		},
-
-		uniqueWordContainsIllegalCharacters: function(){
-			return ! isAlphaNumeric(this.blogUniqueWord);
-		}
 	},
 	
 	methods:{

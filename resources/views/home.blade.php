@@ -18,9 +18,10 @@
             <div class="container">
                 <h1 class="title is-1">Submit your blog!</h1>
                 <p class="control">
-                  <input @keyup="updateButton" class="input" v-model="url" type="text" placeholder="Enter URL here">
+                    <input name="Submit" v-validate="'url'" @keyup="updateButton" :class="{'input':true, 'is-danger': errors.has('Submit')}" v-model="url" type="text" placeholder="Enter URL here">
+                    <span class="help is-danger" v-if="errors.has('Submit')">@{{ errors.first('Submit') }}</span>
                 </p>
-                <button id="submit1" @click="getUrlDetails" :class="{'button is-primary' : true , 'is-disabled' : url == null || url == '' || !submittedUrlIsUrl, 'is-loading' : urlButtonIsLoading}" v-text="urlButtonText" ></button>
+                <button id="submit1" @click="getUrlDetails" :class="{'button is-primary' : true , 'is-disabled' : errors.has('Submit') || url== '' || url == null}" v-text="urlButtonText" ></button>
                 
             </div>
         </div>
@@ -33,21 +34,23 @@
                 <p>Please fill in the information below before submitting</p>
                 <div class="columns">
                     <div class="column"> <!-- First Column -->
+
                         <label class="label">Blog Title</label>
                         <p class="control">
-                          <input :class="{ 'input':true, 'is-danger': blogTitle == null || blogTitle == ''}" v-model="blogTitle" type="text">
-                          <span class="help is-danger" v-if="blogTitle == null || blogTitle == ''">This is a required field</span>
+                            <input v-validate="'required|max:50'" :class="{ 'input':true, 'is-danger': errors.has('Blog Title') }" name="Blog Title" v-model="blogTitle" type="text">
+                            <span class="help is-danger" v-if="errors.has('Blog Title')">@{{ errors.first('Blog Title') }}</span>
                         </p>
-                        <label class="label">Unique Blog username</label>
+
+                        <label class="label">Unique Blog Username</label>
                         <p class="control">
-                          <input :class="{ 'input':true, 'is-danger': blogUniqueWord == null || blogUniqueWord == '' || uniqueWordContainsIllegalCharacters }" v-model="blogUniqueWord" type="text">
-                          <span class="help is-danger" v-if="blogUniqueWord == null || blogUniqueWord == ''">This is a required field</span>
-                          <span class="help is-danger" v-if="uniqueWordContainsIllegalCharacters">Can only use letters and numbers</span>
+                            <input name="Unique Blog Username" v-validate="'required|min:5|alpha_num'" :class="{ 'input':true, 'is-danger': errors.has('Unique Blog Username') }" v-model="blogUniqueWord" type="text">
+                            <span class="help is-danger" v-if="errors.has('Unique Blog Username')">@{{ errors.first('Unique Blog Username') }}</span>
                         </p>
+
                         <label class="label">Blog Description</label>
                         <p class="control">
-                          <input :class="{ 'input':true, 'is-danger': blogDescription == null || blogDescription == ''}" v-model="blogDescription" type="text">
-                          <span class="help is-danger" v-if="blogDescription == null || blogDescription == ''">This is a required field</span>
+                          <input name="Blog Description" v-validate="'required|min:10|max:100'" :class="{ 'input':true, 'is-danger': errors.has('Blog Description') }" v-model="blogDescription" type="text">
+                          <span class="help is-danger" v-if="errors.has('Blog Description')">@{{ errors.first('Blog Description') }} </span>
                         </p>
 
                         <label class="label">Pick Categories (Maximum 2)</label>
@@ -67,13 +70,12 @@
                                 Your Blog's Feed (RSS)
                             </h3>
                             <p class="control has-addons">
-                              <input :class=" { 'input':true, 'is-expanded':true, 'is-danger': blogRss == null || blogRss == '' || ! rssIsURL}" v-model="blogRss" type="text" @blur="getRssContent">
+                              <input name="RSS" v-validate="'required|url'" :class=" { 'input':true, 'is-expanded':true, 'is-danger': errors.has('RSS')}" v-model="blogRss" type="text" @blur="getRssContent">
                               <a class="button is-info">
                                 Update
                               </a>
                             </p>
-                              <span class="help is-danger" v-if="blogRss == null || blogRss == ''">This is a required field</span>
-                              <span class="help is-danger" v-if="!rssIsURL">This has to be a URL</span>
+                              <span class="help is-danger" v-if="errors.has('RSS')">@{{errors.first('RSS')}}</span>
 
                             <div v-if="blogRssIsLoading">
                                 <button class="button is-primary is-loading">&nbsp;</button> Loading your RSS content
