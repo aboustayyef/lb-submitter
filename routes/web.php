@@ -14,13 +14,16 @@ use Illuminate\Http\Request;
 */
 
 Route::get('/', function () {
+    
     return view('home');
+
 });
 
 Route::get('/api/urlDetails', function(Request $request){
 
 	$response= new App\UrlAnalyzer($request->get('url'));
 	return response()->json($response);
+
 });
 
 
@@ -28,4 +31,12 @@ Route::get('/api/feedDetails', function(Request $request){
 
 	$response= new App\FeedFetcher($request->get('url'));
 	return response()->json($response);
+
+});
+
+Route::get('/api/twitterDetails', function(Request $request){
+
+	$response = new App\TwitterGetter($request->get('username'));
+	return response()->json($response);
+
 });

@@ -7147,3 +7147,7 @@ label.panel-block:hover {
 li {
   margin-top: 0.5em;
 }
+
+.has-space-under {
+  margin-bottom: 1.25rem;
+}

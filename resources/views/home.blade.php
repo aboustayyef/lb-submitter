@@ -17,11 +17,11 @@
         <div class="section">
             <div class="container">
                 <h1 class="title is-1">Submit your blog!</h1>
-                <p class="control">
-                    <input name="Submit" v-validate="'url'" @keyup="updateButton" :class="{'input':true, 'is-danger': errors.has('Submit')}" v-model="url" type="text" placeholder="Enter URL here">
+                <p :class="{'control':true, 'is-loading': urlButtonIsLoading }">
+                    <input name="Submit" v-validate="'url'" @keyup="updateButton" :class="{'input':true, 'is-danger': errors.has('Submit')}" v-model="url" type="text" :disabled="urlButtonIsLoading" :placeholder="urlButtonIsLoading? 'Loading Details' : 'Enter URL here'">
                     <span class="help is-danger" v-if="errors.has('Submit')">@{{ errors.first('Submit') }}</span>
                 </p>
-                <button id="submit1" @click="getUrlDetails" :class="{'button is-primary' : true , 'is-disabled' : errors.has('Submit') || url== '' || url == null}" v-text="urlButtonText" ></button>
+                <button v-if="!urlButtonIsLoading" id="submit1" @click="getUrlDetails" :class="{'button is-primary' : true , 'is-disabled' : errors.has('Submit') || url== '' || url == null}" v-text="urlButtonText" ></button>
                 
             </div>
         </div>
@@ -34,6 +34,12 @@
                 <p>Please fill in the information below before submitting</p>
                 <div class="columns">
                     <div class="column"> <!-- First Column -->
+
+                        <label class="label">Twitter Username (without the @)</label>
+                        <p :class="{'control':true, 'is-loading': twitterIsLoading}">
+                            <input v-validate="'required|alpha_dash'" :class="{ 'input':true, 'is-danger': errors.has('Twitter Username') || twitterError }" name="Twitter Username" v-model="twitterUsername" type="text" @blur="getTwitterDetails">
+                            <span class="help is-danger" v-if="errors.has('Twitter Username')">@{{ errors.first('Twitter Username') }}</span>
+                        </p>
 
                         <label class="label">Blog Title</label>
                         <p class="control">
@@ -65,6 +71,9 @@
            
                     </div>
                     <div class="column">
+                        <figure class="image is-128x128 has-space-under">
+                            <img :src="twitterImageUrl">
+                        </figure>
                         <div class="box">
                             <h3 class="title is-4">
                                 Your Blog's Feed (RSS)
