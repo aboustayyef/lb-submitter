@@ -62,23 +62,27 @@
            
                     </div>
                     <div class="column">
-                        <div class="panel">
-                            <p class="panel-heading">
-                                Blog RSS
+                        <div class="box">
+                            <h3 class="title is-4">
+                                Your Blog's Feed (RSS)
+                            </h3>
+                            <p class="control has-addons">
+                              <input :class=" { 'input':true, 'is-expanded':true, 'is-danger': blogRss == null || blogRss == '' || ! rssIsURL}" v-model="blogRss" type="text" @blur="getRssContent">
+                              <a class="button is-info">
+                                Update
+                              </a>
                             </p>
-                            <div class="panel-block">
-                                <p class="control">
-                                  <input :class="{ 'input':true, 'is-danger': blogRss == null || blogRss == '' || ! rssIsURL}" v-model="blogRss" type="text" @blur="getRssContent">
-                                  <span class="help is-danger" v-if="blogRss == null || blogRss == ''">This is a required field</span>
-                                  <span class="help is-danger" v-if="!rssIsURL">This has to be a URL</span>
-                                </p>
-                            </div>
-                            <div v-if="rssIsURL && blogPosts.length == 0 ">
+                              <span class="help is-danger" v-if="blogRss == null || blogRss == ''">This is a required field</span>
+                              <span class="help is-danger" v-if="!rssIsURL">This has to be a URL</span>
+
+                            <div v-if="blogRssIsLoading">
                                 <button class="button is-primary is-loading">&nbsp;</button> Loading your RSS content
                             </div>
-                            <div v-for="post in blogPosts">
-                                 <a class="panel-block" :href="post.url" >@{{post.title}}</a>
-                            </div>
+                            <ul>
+                                <li v-for="post in blogPosts">
+                                     <a :href="post.url" >@{{post.title}}</a>
+                                </li>
+                            </ul>
                         </div>
                     </div> <!-- Second column -->
                 </div>

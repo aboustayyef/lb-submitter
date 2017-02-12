@@ -38,6 +38,7 @@ let app = new Vue({
 		blogTitle:"",						// the title of the blog
 		blogDescription:"",					// the description of the blog
 		blogRss:"",							// the rss feed of the blog
+		blogRssIsLoading: false,			// show the spinner of rss loading	
 		blogPosts: [],						// the list of posts
 
 		categories: categories,				// the list of categories, as imported from categories.js file
@@ -106,9 +107,11 @@ let app = new Vue({
 
 		getRssContent: function(){
 			this.blogPosts = [];
+			this.blogRssIsLoading = true;
 			axios.get('/api/feedDetails?url=' + this.blogRss)
 			     .then((response) => {
 			     	if (response.data.status == 'ok') {
+				     	this.blogRssIsLoading = false;
 				     	this.blogPosts = response.data.finalItems;
 			     	}
 			     }

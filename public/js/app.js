@@ -971,6 +971,7 @@ var app = new Vue({
 		blogTitle: "", // the title of the blog
 		blogDescription: "", // the description of the blog
 		blogRss: "", // the rss feed of the blog
+		blogRssIsLoading: false, // show the spinner of rss loading	
 		blogPosts: [], // the list of posts
 
 		categories: __WEBPACK_IMPORTED_MODULE_0__categories__["a" /* default */], // the list of categories, as imported from categories.js file
@@ -1040,8 +1041,10 @@ var app = new Vue({
 			var _this2 = this;
 
 			this.blogPosts = [];
+			this.blogRssIsLoading = true;
 			axios.get('/api/feedDetails?url=' + this.blogRss).then(function (response) {
 				if (response.data.status == 'ok') {
+					_this2.blogRssIsLoading = false;
 					_this2.blogPosts = response.data.finalItems;
 				}
 			});
