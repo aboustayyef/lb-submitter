@@ -3,10 +3,10 @@
 √ make sure that unique blogname is one word only
 √ ability to preview RSS feed
 √ replace custom validations with vee-validate.com library
+√ get twitter username
 x ability to check if submitted blog exists (not necessary - will check at confirmation stage)
+x drag and drop images? (nope, use twitter image)
 
--- get twitter username
--- drag and drop images?
 -- if everything ok, allow to submit blog
 -- when submitted, blog will be added to db, with crawling set to "inactive"
 -- add admin interface to approve submitted blogs
