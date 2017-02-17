@@ -1,3 +1,6 @@
+// Vue validation library
+import VeeValidate from 'vee-validate';
+
 // app global variable (state)
 import lbSubmitter from '../lbSubmitter';
 
@@ -11,11 +14,11 @@ Vue.component('blog-details', {
                 </h2>
                 <p>Please fill in the information below before submitting</p>
                 <div class="columns">
-                    <div class="column"> <!-- First Column -->
+                    <div class="column">
 
                         <label class="label">Twitter Username (without the @)</label>
                         <p :class="{'control':true, 'is-loading': twitterIsLoading}">
-                            <input v-validate="'required|alpha_dash'" :class="{ 'input':true, 'is-danger': errors.has('Twitter Username') || twitterError }" name="Twitter Username" v-model="twitterUsername" type="text" @blur="$emit('twitter-field-updated')">
+                            <input name="Twitter Username" v-validate="'required|alpha_dash'" :class="{ 'input':true, 'is-danger': errors.has('Twitter Username') || twitterError }"  v-model="twitterUsername" type="text" @blur="$emit('twitter-field-updated')">
                             <span class="help is-danger" v-if="errors.has('Twitter Username')">{{ errors.first('Twitter Username') }}</span>
                         </p>
 
@@ -73,7 +76,7 @@ Vue.component('blog-details', {
                                 </li>
                             </ul>
                         </div>
-                    </div> <!-- Second column -->
+                    </div>
                 </div>
 
             </div>

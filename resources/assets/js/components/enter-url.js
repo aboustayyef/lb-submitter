@@ -1,3 +1,6 @@
+// Vue validation library
+import VeeValidate from 'vee-validate';
+
 // app global variable (state)
 import lbSubmitter from '../lbSubmitter';
 
