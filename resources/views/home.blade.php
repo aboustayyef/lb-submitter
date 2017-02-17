@@ -15,7 +15,7 @@
 
     <div id="app">
         <enter-url v-on:data-ready="getRssContent"></enter-url>
-        <blog-details v-on:twitter-field-updated="getTwitterDetails"></blog-details>
+        <blog-details v-on:twitter-field-updated="getTwitterDetails" v-on:rss-field-updated="getRssContent"></blog-details>
         
     </div>
     <script type="text/javascript" src="/js/app.js"></script>

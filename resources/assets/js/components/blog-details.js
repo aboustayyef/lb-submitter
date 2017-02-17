@@ -57,7 +57,7 @@ Vue.component('blog-details', {
                                 Your Blog's Feed (RSS)
                             </h3>
                             <p class="control has-addons">
-                              <input name="RSS" v-validate="'required|url'" :class=" { 'input':true, 'is-expanded':true, 'is-danger': errors.has('RSS')}" v-model="blogRss" type="text" @blur="getRssContent">
+                              <input name="RSS" v-validate="'required|url'" :class=" { 'input':true, 'is-expanded':true, 'is-danger': errors.has('RSS')}" v-model="blogRss" type="text" @blur="$emit('rss-field-updated')">
                               <a class="button is-info">
                                 Update
                               </a>
@@ -81,6 +81,13 @@ Vue.component('blog-details', {
     `,
   data: function(){
   	return lbSubmitter;
-  }
+  },
+  methods: {
+        guardCategoriesMaximum: function(){
+            if (this.checkedCategories.length > 2) {
+                this.checkedCategories.splice(-1,1);
+            }
+        }
+    }
 
 });

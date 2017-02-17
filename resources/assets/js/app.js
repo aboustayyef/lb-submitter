@@ -54,12 +54,5 @@ let app = new Vue({
 				    this.lbSubmitter.twitterIsLoading = false;
 			     }
 		)},
-
-		// makes sure user doesn't select more than two categories
-		guardCategoriesMaximum: function(){
-			if (this.lbSubmitter.checkedCategories.length > 2) {
-				this.lbSubmitter.checkedCategories.splice(-1,1);
-			}
-		}
 	}
 });
