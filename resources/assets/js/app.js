@@ -7,36 +7,42 @@
 
 require('./bootstrap');
 import categories from './categories';
+require('./test-component');
 import VeeValidate from 'vee-validate';
 
 // validation library
 Vue.use(VeeValidate);
+
+// app global data (state)
+let lbSubmitter = {
+	url: "", 							// submitted url 
+	urlButtonText: 'Submit', 			// Text shown on the url submit button 
+	urlButtonIsLoading: false,			// when this value is true, the button shows a loading spinner
+
+	blogDetailsEnabled:false,			// when this value is false, the blog details pannel is hidden			
+	blogUniqueWord:"",					// the unique blog username (example: beirutspring)
+	blogDomain:"",						// the url of the blog
+	blogTitle:"",						// the title of the blog
+	blogDescription:"",					// the description of the blog
+	blogRss:"",							// the rss feed of the blog
+	blogRssIsLoading: false,			// show the spinner of rss loading	
+	blogPosts: [],						// the list of posts
+
+	twitterUsername: false,				// Twitter Details: username and Image
+	twitterImageUrl: null,				// URL of twitter Image
+	twitterIsLoading: false,			// status of twitter loading spinner
+	twitterError: false,				// if fetching results in non-existing account
+
+	categories: categories,				// the list of categories, as imported from categories.js file
+	checkedCategories:["society"]		// an array of categories checked. by default, has society.
+}
 
 let app = new Vue({
 
 	el: "#app",
 
 	data: {
-		url: "", 							// submitted url 
-		urlButtonText: 'Submit', 			// Text shown on the url submit button 
-		urlButtonIsLoading: false,			// when this value is true, the button shows a loading spinner
-
-		blogDetailsEnabled:false,			// when this value is false, the blog details pannel is hidden			
-		blogUniqueWord:"",					// the unique blog username (example: beirutspring)
-		blogDomain:"",						// the url of the blog
-		blogTitle:"",						// the title of the blog
-		blogDescription:"",					// the description of the blog
-		blogRss:"",							// the rss feed of the blog
-		blogRssIsLoading: false,			// show the spinner of rss loading	
-		blogPosts: [],						// the list of posts
-
-		twitterUsername: false,				// Twitter Details: username and Image
-		twitterImageUrl: null,				// URL of twitter Image
-		twitterIsLoading: false,			// status of twitter loading spinner
-		twitterError: false,				// if fetching results in non-existing account
-
-		categories: categories,				// the list of categories, as imported from categories.js file
-		checkedCategories:["society"]		// an array of categories checked. by default, has society.
+		lbSubmitter: lbSubmitter
 	},
 	
 	methods:{
@@ -51,13 +57,12 @@ let app = new Vue({
 		
 		getUrlDetails: function(){
 			// show loading spinner
-			this.urlButtonIsLoading = true;
+			this.lbSubmitter.urlButtonIsLoading = true;
 			// clear search field
-			let urlToUse = this.url;
-			this.url = '';
-
+			let urlToUse = this.lbSubmitter.url;
+			this.lbSubmitter.url = '';
 			// hide details panel if previously existed
-			this.blogDetailsEnabled = false;
+			this.lbSubmitter.blogDetailsEnabled = false;
 
 
 			// request data from api
@@ -66,15 +71,15 @@ let app = new Vue({
 			  .then( (response) => {
 
 			    // remove loading spinner
-			    this.urlButtonIsLoading = false;
-			    this.urlButtonText = "Refresh";
+			    this.lbSubmitter.urlButtonIsLoading = false;
+			    this.lbSubmitter.urlButtonText = "Refresh";
 
 			    if (response.data.status != 'error') {
-				    this.blogDetailsEnabled = true;
-				    this.blogTitle = response.data.result.title;
-				    this.blogUniqueWord = response.data.result.domain;
-				    this.blogDescription = response.data.result.description;
-				    this.blogRss = response.data.result.feed;
+				    this.lbSubmitter.blogDetailsEnabled = true;
+				    this.lbSubmitter.blogTitle = response.data.result.title;
+				    this.lbSubmitter.blogUniqueWord = response.data.result.domain;
+				    this.lbSubmitter.blogDescription = response.data.result.description;
+				    this.lbSubmitter.blogRss = response.data.result.feed;
 				    this.getRssContent();
 			    }
 
@@ -85,36 +90,36 @@ let app = new Vue({
 		},
 
 		getRssContent: function(){
-			this.blogPosts = [];
-			this.blogRssIsLoading = true;
-			axios.get('/api/feedDetails?url=' + this.blogRss)
+			this.lbSubmitter.blogPosts = [];
+			this.lbSubmitter.blogRssIsLoading = true;
+			axios.get('/api/feedDetails?url=' + this.lbSubmitter.blogRss)
 			     .then((response) => {
 			     	if (response.data.status == 'ok') {
-				     	this.blogPosts = response.data.finalItems;
-				     	this.blogRssIsLoading = false;
+				     	this.lbSubmitter.blogPosts = response.data.finalItems;
+				     	this.lbSubmitter.blogRssIsLoading = false;
 			     	}
 			     }
 		)},
 
 		getTwitterDetails: function(){
-			this.twitterIsLoading = true;
-			this.twitterImageUrl = null;
-			axios.get('/api/twitterDetails?username=' + this.twitterUsername)
+			this.lbSubmitter.twitterIsLoading = true;
+			this.lbSubmitter.twitterImageUrl = null;
+			axios.get('/api/twitterDetails?username=' + this.lbSubmitter.twitterUsername)
 			     .then((response) => {
 			     	if (response.data.status == 'ok') {
-				     	this.twitterImageUrl = response.data.result.profile_image_url.replace('_normal','');
-				     	this.twitterError = false;
+				     	this.lbSubmitter.twitterImageUrl = response.data.result.profile_image_url.replace('_normal','');
+				     	this.lbSubmitter.twitterError = false;
 			     	} else {
-			     		this.twitterError = true;	
+			     		this.lbSubmitter.twitterError = true;	
 			     	}
-				    this.twitterIsLoading = false;
+				    this.lbSubmitter.twitterIsLoading = false;
 			     }
 		)},
 
 		// makes sure user doesn't select more than two categories
 		guardCategoriesMaximum: function(){
-			if (this.checkedCategories.length > 2) {
-				this.checkedCategories.splice(-1,1);
+			if (this.lbSubmitter.checkedCategories.length > 2) {
+				this.lbSubmitter.checkedCategories.splice(-1,1);
 			}
 		}
 	}
