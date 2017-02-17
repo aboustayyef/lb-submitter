@@ -14,18 +14,7 @@
     </script>
 
     <div id="app">
-        <div class="section">
-            <div class="container">
-                <test-component></test-component>
-                <h1 class="title is-1">Submit your blog!</h1>
-                <p :class="{'control':true, 'is-loading': lbSubmitter.urlButtonIsLoading }">
-                    <input name="Submit" v-validate="'url'" @keyup="updateButton" :class="{'input':true, 'is-danger': errors.has('Submit')}" v-model="lbSubmitter.url" type="text" :disabled="lbSubmitter.urlButtonIsLoading" :placeholder="lbSubmitter.urlButtonIsLoading? 'Loading Details' : 'Enter URL here'">
-                    <span class="help is-danger" v-if="errors.has('Submit')">@{{ errors.first('Submit') }}</span>
-                </p>
-                <button v-if="!lbSubmitter.urlButtonIsLoading" id="submit1" @click="getUrlDetails" :class="{'button is-primary' : true , 'is-disabled' : errors.has('Submit') || lbSubmitter.url== '' || lbSubmitter.url == null}" v-text="lbSubmitter.urlButtonText" ></button>
-                
-            </div>
-        </div>
+        <enter-url></enter-url>
 
         <div class="section" v-if="lbSubmitter.blogDetailsEnabled" style="background-color:#f3f3f3">
             <div class="container">

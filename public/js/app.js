@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "./";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 34);
+/******/ 	return __webpack_require__(__webpack_require__.s = 35);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -380,7 +380,7 @@ module.exports = {
 /* WEBPACK VAR INJECTION */(function(process) {
 
 var utils = __webpack_require__(0);
-var normalizeHeaderName = __webpack_require__(25);
+var normalizeHeaderName = __webpack_require__(26);
 
 var PROTECTION_PREFIX = /^\)\]\}',?\n/;
 var DEFAULT_CONTENT_TYPE = {
@@ -667,12 +667,12 @@ process.umask = function() { return 0; };
 /* WEBPACK VAR INJECTION */(function(process) {
 
 var utils = __webpack_require__(0);
-var settle = __webpack_require__(17);
-var buildURL = __webpack_require__(20);
-var parseHeaders = __webpack_require__(26);
-var isURLSameOrigin = __webpack_require__(24);
+var settle = __webpack_require__(18);
+var buildURL = __webpack_require__(21);
+var parseHeaders = __webpack_require__(27);
+var isURLSameOrigin = __webpack_require__(25);
 var createError = __webpack_require__(6);
-var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(19);
+var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(20);
 
 module.exports = function xhrAdapter(config) {
   return new Promise(function dispatchXhrRequest(resolve, reject) {
@@ -768,7 +768,7 @@ module.exports = function xhrAdapter(config) {
     // This is only done if running in a standard browser environment.
     // Specifically not if we're in a web worker, or react-native.
     if (utils.isStandardBrowserEnv()) {
-      var cookies = __webpack_require__(22);
+      var cookies = __webpack_require__(23);
 
       // Add xsrf header
       var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
@@ -889,7 +889,7 @@ module.exports = function isCancel(value) {
 "use strict";
 
 
-var enhanceError = __webpack_require__(16);
+var enhanceError = __webpack_require__(17);
 
 /**
  * Create an Error with the specified message, config, error code, and response.
@@ -929,10 +929,42 @@ module.exports = function bind(fn, thisArg) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__categories__ = __webpack_require__(30);
+
+// app global data (state)
+var lbSubmitter = {
+  url: "", // submitted url 
+  urlButtonText: 'Submit', // Text shown on the url submit button 
+  urlButtonIsLoading: false, // when this value is true, the button shows a loading spinner
+
+  blogDetailsEnabled: false, // when this value is false, the blog details pannel is hidden      
+  blogUniqueWord: "", // the unique blog username (example: beirutspring)
+  blogDomain: "", // the url of the blog
+  blogTitle: "", // the title of the blog
+  blogDescription: "", // the description of the blog
+  blogRss: "", // the rss feed of the blog
+  blogRssIsLoading: false, // show the spinner of rss loading  
+  blogPosts: [], // the list of posts
+
+  twitterUsername: false, // Twitter Details: username and Image
+  twitterImageUrl: null, // URL of twitter Image
+  twitterIsLoading: false, // status of twitter loading spinner
+  twitterError: false, // if fetching results in non-existing account
+
+  categories: __WEBPACK_IMPORTED_MODULE_0__categories__["a" /* default */], // the list of categories, as imported from categories.js file
+  checkedCategories: ["society"] // an array of categories checked. by default, has society.
+};
+/* harmony default export */ __webpack_exports__["a"] = lbSubmitter;
+
+/***/ }),
+/* 9 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__categories__ = __webpack_require__(29);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vee_validate__ = __webpack_require__(31);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vee_validate___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vee_validate__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vee_validate__ = __webpack_require__(32);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vee_validate___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vee_validate__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__lbSubmitter__ = __webpack_require__(8);
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -940,115 +972,52 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-__webpack_require__(28);
+__webpack_require__(29);
 
-__webpack_require__(30);
 
+// App data (state)
+
+__webpack_require__(31);
 
 // validation library
-Vue.use(__WEBPACK_IMPORTED_MODULE_1_vee_validate___default.a);
-
-// app global data (state)
-var lbSubmitter = {
-	url: "", // submitted url 
-	urlButtonText: 'Submit', // Text shown on the url submit button 
-	urlButtonIsLoading: false, // when this value is true, the button shows a loading spinner
-
-	blogDetailsEnabled: false, // when this value is false, the blog details pannel is hidden			
-	blogUniqueWord: "", // the unique blog username (example: beirutspring)
-	blogDomain: "", // the url of the blog
-	blogTitle: "", // the title of the blog
-	blogDescription: "", // the description of the blog
-	blogRss: "", // the rss feed of the blog
-	blogRssIsLoading: false, // show the spinner of rss loading	
-	blogPosts: [], // the list of posts
-
-	twitterUsername: false, // Twitter Details: username and Image
-	twitterImageUrl: null, // URL of twitter Image
-	twitterIsLoading: false, // status of twitter loading spinner
-	twitterError: false, // if fetching results in non-existing account
-
-	categories: __WEBPACK_IMPORTED_MODULE_0__categories__["a" /* default */], // the list of categories, as imported from categories.js file
-	checkedCategories: ["society"] // an array of categories checked. by default, has society.
-};
+Vue.use(__WEBPACK_IMPORTED_MODULE_0_vee_validate___default.a);
 
 var app = new Vue({
 
 	el: "#app",
 
 	data: {
-		lbSubmitter: lbSubmitter
+		lbSubmitter: __WEBPACK_IMPORTED_MODULE_1__lbSubmitter__["a" /* default */]
 	},
 
 	methods: {
 
-		// listening to key events on url field
-
-		updateButton: function updateButton(e) {
-			var key = e.code;
-			if (key == 'Enter') {
-				this.getUrlDetails();
-			};
-		},
-
-		getUrlDetails: function getUrlDetails() {
-			var _this = this;
-
-			// show loading spinner
-			this.lbSubmitter.urlButtonIsLoading = true;
-			// clear search field
-			var urlToUse = this.lbSubmitter.url;
-			this.lbSubmitter.url = '';
-			// hide details panel if previously existed
-			this.lbSubmitter.blogDetailsEnabled = false;
-
-			// request data from api
-
-			axios.get('/api/urlDetails?url=' + urlToUse).then(function (response) {
-
-				// remove loading spinner
-				_this.lbSubmitter.urlButtonIsLoading = false;
-				_this.lbSubmitter.urlButtonText = "Refresh";
-
-				if (response.data.status != 'error') {
-					_this.lbSubmitter.blogDetailsEnabled = true;
-					_this.lbSubmitter.blogTitle = response.data.result.title;
-					_this.lbSubmitter.blogUniqueWord = response.data.result.domain;
-					_this.lbSubmitter.blogDescription = response.data.result.description;
-					_this.lbSubmitter.blogRss = response.data.result.feed;
-					_this.getRssContent();
-				}
-			}).catch(function (error) {
-				console.log(error);
-			});
-		},
-
 		getRssContent: function getRssContent() {
-			var _this2 = this;
+			var _this = this;
 
 			this.lbSubmitter.blogPosts = [];
 			this.lbSubmitter.blogRssIsLoading = true;
 			axios.get('/api/feedDetails?url=' + this.lbSubmitter.blogRss).then(function (response) {
 				if (response.data.status == 'ok') {
-					_this2.lbSubmitter.blogPosts = response.data.finalItems;
-					_this2.lbSubmitter.blogRssIsLoading = false;
+					_this.lbSubmitter.blogPosts = response.data.finalItems;
+					_this.lbSubmitter.blogRssIsLoading = false;
 				}
 			});
 		},
 
 		getTwitterDetails: function getTwitterDetails() {
-			var _this3 = this;
+			var _this2 = this;
 
 			this.lbSubmitter.twitterIsLoading = true;
 			this.lbSubmitter.twitterImageUrl = null;
 			axios.get('/api/twitterDetails?username=' + this.lbSubmitter.twitterUsername).then(function (response) {
 				if (response.data.status == 'ok') {
-					_this3.lbSubmitter.twitterImageUrl = response.data.result.profile_image_url.replace('_normal', '');
-					_this3.lbSubmitter.twitterError = false;
+					_this2.lbSubmitter.twitterImageUrl = response.data.result.profile_image_url.replace('_normal', '');
+					_this2.lbSubmitter.twitterError = false;
 				} else {
-					_this3.lbSubmitter.twitterError = true;
+					_this2.lbSubmitter.twitterError = true;
 				}
-				_this3.lbSubmitter.twitterIsLoading = false;
+				_this2.lbSubmitter.twitterIsLoading = false;
 			});
 		},
 
@@ -1062,19 +1031,19 @@ var app = new Vue({
 });
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(11);
+module.exports = __webpack_require__(12);
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1082,7 +1051,7 @@ module.exports = __webpack_require__(11);
 
 var utils = __webpack_require__(0);
 var bind = __webpack_require__(7);
-var Axios = __webpack_require__(13);
+var Axios = __webpack_require__(14);
 var defaults = __webpack_require__(1);
 
 /**
@@ -1117,14 +1086,14 @@ axios.create = function create(instanceConfig) {
 
 // Expose Cancel & CancelToken
 axios.Cancel = __webpack_require__(4);
-axios.CancelToken = __webpack_require__(12);
+axios.CancelToken = __webpack_require__(13);
 axios.isCancel = __webpack_require__(5);
 
 // Expose all/spread
 axios.all = function all(promises) {
   return Promise.all(promises);
 };
-axios.spread = __webpack_require__(27);
+axios.spread = __webpack_require__(28);
 
 module.exports = axios;
 
@@ -1133,7 +1102,7 @@ module.exports.default = axios;
 
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1197,7 +1166,7 @@ module.exports = CancelToken;
 
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1205,10 +1174,10 @@ module.exports = CancelToken;
 
 var defaults = __webpack_require__(1);
 var utils = __webpack_require__(0);
-var InterceptorManager = __webpack_require__(14);
-var dispatchRequest = __webpack_require__(15);
-var isAbsoluteURL = __webpack_require__(23);
-var combineURLs = __webpack_require__(21);
+var InterceptorManager = __webpack_require__(15);
+var dispatchRequest = __webpack_require__(16);
+var isAbsoluteURL = __webpack_require__(24);
+var combineURLs = __webpack_require__(22);
 
 /**
  * Create a new instance of Axios
@@ -1289,7 +1258,7 @@ module.exports = Axios;
 
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1348,14 +1317,14 @@ module.exports = InterceptorManager;
 
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var utils = __webpack_require__(0);
-var transformData = __webpack_require__(18);
+var transformData = __webpack_require__(19);
 var isCancel = __webpack_require__(5);
 var defaults = __webpack_require__(1);
 
@@ -1434,7 +1403,7 @@ module.exports = function dispatchRequest(config) {
 
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1460,7 +1429,7 @@ module.exports = function enhanceError(error, config, code, response) {
 
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1492,7 +1461,7 @@ module.exports = function settle(resolve, reject, response) {
 
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1519,7 +1488,7 @@ module.exports = function transformData(data, headers, fns) {
 
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1562,7 +1531,7 @@ module.exports = btoa;
 
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1637,7 +1606,7 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1656,7 +1625,7 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1716,7 +1685,7 @@ module.exports = (
 
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1737,7 +1706,7 @@ module.exports = function isAbsoluteURL(url) {
 
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1812,7 +1781,7 @@ module.exports = (
 
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1831,7 +1800,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1875,7 +1844,7 @@ module.exports = function parseHeaders(headers) {
 
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1909,7 +1878,7 @@ module.exports = function spread(callback) {
 
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -1918,7 +1887,7 @@ module.exports = function spread(callback) {
  * and simple, leaving you to focus on building your next great project.
  */
 
-window.Vue = __webpack_require__(32);
+window.Vue = __webpack_require__(33);
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
@@ -1926,7 +1895,7 @@ window.Vue = __webpack_require__(32);
  * CSRF token as a header based on the value of the "XSRF" token cookie.
  */
 
-window.axios = __webpack_require__(10);
+window.axios = __webpack_require__(11);
 
 window.axios.defaults.headers.common = {
   'X-CSRF-TOKEN': window.Laravel.csrfToken,
@@ -1934,7 +1903,7 @@ window.axios.defaults.headers.common = {
 };
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1963,16 +1932,67 @@ var categories = [{
 /* harmony default export */ __webpack_exports__["a"] = categories;
 
 /***/ }),
-/* 30 */
-/***/ (function(module, exports) {
+/* 31 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__lbSubmitter__ = __webpack_require__(8);
+// app global variable (state)
+
 
 // register
-Vue.component('test-component', {
-  template: '<div>A custom component!</div>'
+Vue.component('enter-url', {
+				template: '\n        <div class="section">\n            <div class="container">\n                <h1 class="title is-1">Submit your blog!</h1>\n                <p :class="{\'control\':true, \'is-loading\': urlButtonIsLoading }">\n                    <input name="Submit" v-validate="\'url\'" @keyup="updateButton" :class="{\'input\':true, \'is-danger\': errors.has(\'Submit\')}" v-model="url" type="text" :disabled="urlButtonIsLoading" :placeholder="urlButtonIsLoading? \'Loading Details\' : \'Enter URL here\'">\n                    <span class="help is-danger" v-if="errors.has(\'Submit\')">{{ errors.first(\'Submit\') }}</span>\n                </p>\n                <button v-if="!urlButtonIsLoading" id="submit1" @click="getUrlDetails" :class="{\'button is-primary\' : true , \'is-disabled\' : errors.has(\'Submit\') || url== \'\' || url == null}" v-text="urlButtonText" ></button>\n                \n            </div>\n        </div>\n    ',
+				data: function data() {
+								return __WEBPACK_IMPORTED_MODULE_0__lbSubmitter__["a" /* default */];
+				},
+				methods: {
+								// listening to key events on url field
+
+								updateButton: function updateButton(e) {
+												var key = e.code;
+												if (key == 'Enter') {
+																this.getUrlDetails();
+												};
+								},
+
+								getUrlDetails: function getUrlDetails() {
+												var _this = this;
+
+												// show loading spinner
+												this.urlButtonIsLoading = true;
+												// clear search field
+												var urlToUse = this.url;
+												this.url = '';
+												// hide details panel if previously existed
+												this.blogDetailsEnabled = false;
+
+												// request data from api
+
+												axios.get('/api/urlDetails?url=' + urlToUse).then(function (response) {
+
+																// remove loading spinner
+																_this.urlButtonIsLoading = false;
+																_this.urlButtonText = "Refresh";
+
+																if (response.data.status != 'error') {
+																				_this.blogDetailsEnabled = true;
+																				_this.blogTitle = response.data.result.title;
+																				_this.blogUniqueWord = response.data.result.domain;
+																				_this.blogDescription = response.data.result.description;
+																				_this.blogRss = response.data.result.feed;
+																				_this.getRssContent();
+																}
+												}).catch(function (error) {
+																console.log(error);
+												});
+								}
+				}
 });
 
 /***/ }),
-/* 31 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 (function (global, factory) {
@@ -5016,7 +5036,7 @@ return index;
 
 
 /***/ }),
-/* 32 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13589,10 +13609,10 @@ Vue$3.compile = compileToFunctions;
 
 module.exports = Vue$3;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(33)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(34)))
 
 /***/ }),
-/* 33 */
+/* 34 */
 /***/ (function(module, exports) {
 
 var g;
@@ -13619,11 +13639,11 @@ module.exports = g;
 
 
 /***/ }),
-/* 34 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(8);
-module.exports = __webpack_require__(9);
+__webpack_require__(9);
+module.exports = __webpack_require__(10);
 
 
 /***/ })
