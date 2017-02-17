@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "./";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 35);
+/******/ 	return __webpack_require__(__webpack_require__.s = 36);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -962,7 +962,7 @@ var lbSubmitter = {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vee_validate__ = __webpack_require__(32);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vee_validate__ = __webpack_require__(33);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vee_validate___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vee_validate__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__lbSubmitter__ = __webpack_require__(8);
 
@@ -974,12 +974,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 __webpack_require__(29);
 
+// Vue validation library
+
 
 // App data (state)
 
+
+__webpack_require__(32);
 __webpack_require__(31);
 
-// validation library
 Vue.use(__WEBPACK_IMPORTED_MODULE_0_vee_validate___default.a);
 
 var app = new Vue({
@@ -1887,7 +1890,7 @@ module.exports = function spread(callback) {
  * and simple, leaving you to focus on building your next great project.
  */
 
-window.Vue = __webpack_require__(33);
+window.Vue = __webpack_require__(34);
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
@@ -1942,6 +1945,25 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 // register
+Vue.component('blog-details', {
+    template: '\n        <div class="section" v-if="blogDetailsEnabled" style="background-color:#f3f3f3">\n            <div class="container">\n                <h2 class="title is-2">\n                    Information about your blog\n                </h2>\n                <p>Please fill in the information below before submitting</p>\n                <div class="columns">\n                    <div class="column"> <!-- First Column -->\n\n                        <label class="label">Twitter Username (without the @)</label>\n                        <p :class="{\'control\':true, \'is-loading\': twitterIsLoading}">\n                            <input v-validate="\'required|alpha_dash\'" :class="{ \'input\':true, \'is-danger\': errors.has(\'Twitter Username\') || twitterError }" name="Twitter Username" v-model="twitterUsername" type="text" @blur="$emit(\'twitter-field-updated\')">\n                            <span class="help is-danger" v-if="errors.has(\'Twitter Username\')">{{ errors.first(\'Twitter Username\') }}</span>\n                        </p>\n\n                        <label class="label">Blog Title</label>\n                        <p class="control">\n                            <input v-validate="\'required|max:50\'" :class="{ \'input\':true, \'is-danger\': errors.has(\'Blog Title\') }" name="Blog Title" v-model="blogTitle" type="text">\n                            <span class="help is-danger" v-if="errors.has(\'Blog Title\')">{{ errors.first(\'Blog Title\') }}</span>\n                        </p>\n\n                        <label class="label">Unique Blog Username</label>\n                        <p class="control">\n                            <input name="Unique Blog Username" v-validate="\'required|min:5|alpha_num\'" :class="{ \'input\':true, \'is-danger\': errors.has(\'Unique Blog Username\') }" v-model="blogUniqueWord" type="text">\n                            <span class="help is-danger" v-if="errors.has(\'Unique Blog Username\')">{{ errors.first(\'Unique Blog Username\') }}</span>\n                        </p>\n\n                        <label class="label">Blog Description</label>\n                        <p class="control">\n                          <input name="Blog Description" v-validate="\'required|min:10|max:100\'" :class="{ \'input\':true, \'is-danger\': errors.has(\'Blog Description\') }" v-model="blogDescription" type="text">\n                          <span class="help is-danger" v-if="errors.has(\'Blog Description\')">{{ errors.first(\'Blog Description\') }} </span>\n                        </p>\n\n                        <label class="label">Pick Categories (Maximum 2)</label>\n                        <p class="control" v-for="category in categories">\n                          <label class="checkbox">\n                            <input type="checkbox" :value="category.name" @change="guardCategoriesMaximum" v-model="checkedCategories">\n                            {{category.description}}\n                          </label>\n                        </p>\n                        <span class="help is-danger" v-if="checkedCategories.length == 0 ">You need to choose at least one category</span>\n                        \n           \n                    </div>\n                    <div class="column">\n                        <figure class="image is-128x128 has-space-under">\n                            <img :src="twitterImageUrl">\n                        </figure>\n                        <div class="box">\n                            <h3 class="title is-4">\n                                Your Blog\'s Feed (RSS)\n                            </h3>\n                            <p class="control has-addons">\n                              <input name="RSS" v-validate="\'required|url\'" :class=" { \'input\':true, \'is-expanded\':true, \'is-danger\': errors.has(\'RSS\')}" v-model="blogRss" type="text" @blur="getRssContent">\n                              <a class="button is-info">\n                                Update\n                              </a>\n                            </p>\n                              <span class="help is-danger" v-if="errors.has(\'RSS\')">{{errors.first(\'RSS\')}}</span>\n\n                            <div v-if="blogRssIsLoading">\n                                <button class="button is-primary is-loading">&nbsp;</button> Loading your RSS content\n                            </div>\n                            <ul>\n                                <li v-for="post in blogPosts">\n                                     <a :href="post.url" >{{post.title}}</a>\n                                </li>\n                            </ul>\n                        </div>\n                    </div> <!-- Second column -->\n                </div>\n\n            </div>\n        </div>\n    ',
+    data: function data() {
+        return __WEBPACK_IMPORTED_MODULE_0__lbSubmitter__["a" /* default */];
+    }
+
+});
+
+/***/ }),
+/* 32 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__lbSubmitter__ = __webpack_require__(8);
+// app global variable (state)
+
+
+// register
 Vue.component('enter-url', {
 				template: '\n        <div class="section">\n            <div class="container">\n                <h1 class="title is-1">Submit your blog!</h1>\n                <p :class="{\'control\':true, \'is-loading\': urlButtonIsLoading }">\n                    <input name="Submit" v-validate="\'url\'" @keyup="updateButton" :class="{\'input\':true, \'is-danger\': errors.has(\'Submit\')}" v-model="url" type="text" :disabled="urlButtonIsLoading" :placeholder="urlButtonIsLoading? \'Loading Details\' : \'Enter URL here\'">\n                    <span class="help is-danger" v-if="errors.has(\'Submit\')">{{ errors.first(\'Submit\') }}</span>\n                </p>\n                <button v-if="!urlButtonIsLoading" id="submit1" @click="getUrlDetails" :class="{\'button is-primary\' : true , \'is-disabled\' : errors.has(\'Submit\') || url== \'\' || url == null}" v-text="urlButtonText" ></button>\n                \n            </div>\n        </div>\n    ',
 				data: function data() {
@@ -1952,7 +1974,7 @@ Vue.component('enter-url', {
 
 								updateButton: function updateButton(e) {
 												var key = e.code;
-												if (key == 'Enter') {
+												if (key == 'Enter' || key == 'Tab') {
 																this.getUrlDetails();
 												};
 								},
@@ -1982,7 +2004,7 @@ Vue.component('enter-url', {
 																				_this.blogUniqueWord = response.data.result.domain;
 																				_this.blogDescription = response.data.result.description;
 																				_this.blogRss = response.data.result.feed;
-																				_this.getRssContent();
+																				_this.$emit('data-ready');
 																}
 												}).catch(function (error) {
 																console.log(error);
@@ -1992,7 +2014,7 @@ Vue.component('enter-url', {
 });
 
 /***/ }),
-/* 32 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 (function (global, factory) {
@@ -5036,7 +5058,7 @@ return index;
 
 
 /***/ }),
-/* 33 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13609,10 +13631,10 @@ Vue$3.compile = compileToFunctions;
 
 module.exports = Vue$3;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(34)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(35)))
 
 /***/ }),
-/* 34 */
+/* 35 */
 /***/ (function(module, exports) {
 
 var g;
@@ -13639,7 +13661,7 @@ module.exports = g;
 
 
 /***/ }),
-/* 35 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(9);

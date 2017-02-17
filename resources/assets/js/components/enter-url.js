@@ -24,7 +24,7 @@ Vue.component('enter-url', {
 		
 		updateButton: function(e){
 			let key = e.code;
-			if (key == 'Enter') {this.getUrlDetails()};
+			if (key == 'Enter' || key == 'Tab') {this.getUrlDetails()};
 		},
 
 		
@@ -53,7 +53,7 @@ Vue.component('enter-url', {
 				    this.blogUniqueWord = response.data.result.domain;
 				    this.blogDescription = response.data.result.description;
 				    this.blogRss = response.data.result.feed;
-				    this.getRssContent();
+				    this.$emit('data-ready');
 			    }
 
 			  })

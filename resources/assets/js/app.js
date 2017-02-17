@@ -6,13 +6,16 @@
  */
 
 require('./bootstrap');
+
+// Vue validation library
 import VeeValidate from 'vee-validate';
 
 // App data (state)
 import lbSubmitter from './lbSubmitter';
-require('./components/enter-url');
 
-// validation library
+require('./components/enter-url');
+require('./components/blog-details');
+
 Vue.use(VeeValidate);
 
 let app = new Vue({
