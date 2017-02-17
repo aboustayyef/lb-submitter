@@ -30,7 +30,7 @@ let app = new Vue({
 		blogRssIsLoading: false,			// show the spinner of rss loading	
 		blogPosts: [],						// the list of posts
 
-		twitterUsername: "",				// Twitter Details: username and Image
+		twitterUsername: false,				// Twitter Details: username and Image
 		twitterImageUrl: null,				// URL of twitter Image
 		twitterIsLoading: false,			// status of twitter loading spinner
 		twitterError: false,				// if fetching results in non-existing account
