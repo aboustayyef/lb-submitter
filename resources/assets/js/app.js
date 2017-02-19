@@ -29,6 +29,8 @@ let app = new Vue({
 		blogRss:"",							// the rss feed of the blog
 		blogRssIsLoading: false,			// show the spinner of rss loading	
 		blogPosts: [],						// the list of posts
+		blogUsernameIsUnique: true,			// Checking to see if blog username is unique. true by default to prevent premature errors
+		blogUsernameIsLoading: false,		// spinner for when checking for username
 
 		twitterUsername: null,				// Twitter Details: username and Image
 		twitterImageUrl: null,				// URL of twitter Image
@@ -40,7 +42,7 @@ let app = new Vue({
 	},
 	computed:{
 		formHasErrors: function(){
-			return this.errors.errors.length > 0;
+			return this.errors.errors.length > 0 || this.blogPosts.length < 1 || this.checkedCategories.length <1 || this.checkedCategories.length > 2 || ! this.blogUsernameIsUnique;
 		}
 	},
 	methods:{
@@ -77,6 +79,7 @@ let app = new Vue({
 				    this.blogDetailsEnabled = true;
 				    this.blogTitle = response.data.result.title;
 				    this.blogUniqueWord = response.data.result.domain;
+				    this.checkUsernameUnique();
 				    this.blogDescription = response.data.result.description;
 				    this.blogRss = response.data.result.feed;
 				    this.twitterUsername = '';
@@ -97,6 +100,9 @@ let app = new Vue({
 			     	if (response.data.status == 'ok') {
 				     	this.blogPosts = response.data.finalItems;
 				     	this.blogRssIsLoading = false;
+			     	} else {
+			     		this.blogRssIsLoading = false;
+			     		this.blogPosts = [];
 			     	}
 			     }
 		)},
@@ -114,6 +120,23 @@ let app = new Vue({
 			     	}
 				    this.twitterIsLoading = false;
 			     }
+		)},
+
+		checkUsernameUnique: function(){
+			this.blogUsernameIsLoading = true;
+			axios.get('/api/usernameExists?blogId=' + this.blogUniqueWord)
+				.then((response) => {
+					if (response.data.status == 'ok') {
+						if (response.data.result == true) {
+							this.blogUsernameIsUnique = false;
+						} else {
+							this.blogUsernameIsUnique = true;
+						}
+					} else {
+						// nothing for now
+					}
+					this.blogUsernameIsLoading = false;
+				}
 		)},
 
 		// makes sure user doesn't select more than two categories

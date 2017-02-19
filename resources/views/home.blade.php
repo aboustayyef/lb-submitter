@@ -28,8 +28,9 @@
 
         <div class="section" v-show="blogDetailsEnabled" style="background-color:#f3f3f3">
             <div class="container">
-            <form  @submit.prevent="validateBeforeSubmit" action="/" method="POST" name="lbData">
+            <form action="/" method="POST" name="lbData">
                 {{@csrf_field()}}
+                <input type="hidden" name="twitterImage" :value="twitterImageUrl">
                 <h2 class="title is-2">
                     Information about your blog
                 </h2>
@@ -50,9 +51,10 @@
                         </p>
 
                         <label class="label">Unique Blog Username</label>
-                        <p class="control">
-                            <input name="Unique Blog Username" v-validate="'required|min:5|alpha_num'" :class="{ 'input':true, 'is-danger': errors.has('Unique Blog Username') }" v-model="blogUniqueWord" type="text">
+                        <p :class="{'control':true, 'is-loading': blogUsernameIsLoading}">
+                            <input name="Unique Blog Username" v-validate="'required|min:5|alpha_num'" :class="{ 'input':true, 'is-danger': errors.has('Unique Blog Username') }" v-model="blogUniqueWord" type="text" @blur="checkUsernameUnique">
                             <span class="help is-danger" v-if="errors.has('Unique Blog Username')">@{{ errors.first('Unique Blog Username') }}</span>
+                            <span class="help is-danger" v-if="! blogUsernameIsUnique">This username is already taken. Please choose another one</span>
                         </p>
 
                         <label class="label">Blog Description</label>
@@ -62,15 +64,18 @@
                         </p>
 
                         <label class="label">Pick Categories (Maximum 2)</label>
-                        <p class="control" v-for="category in categories">
-                          <label class="checkbox">
-                            <input type="checkbox" :value="category.name" @change="guardCategoriesMaximum" v-model="checkedCategories">
-                            @{{category.description}}
-                          </label>
-                        </p>
-                        <span class="help is-danger" v-if="checkedCategories.length == 0 ">You need to choose at least one category</span>
+                        <div class="box">
+                            <p class="control" v-for="category in categories">
+                              <label class="checkbox">
+                                <input type="checkbox" :value="category.name" @change="guardCategoriesMaximum" v-model="checkedCategories">
+                                @{{category.description}}
+                              </label>
+                            </p>
+                            <span class="help is-danger" v-if="checkedCategories.length == 0 ">You need to choose at least one category</span>
+                            <span class="help is-danger" v-if="checkedCategories.length > 2 ">You can't choose more than two categories</span>
+                        </div>
                         
-           
+            
                     </div>
                     <div class="column">
                         <figure class="image is-128x128 has-space-under">
@@ -96,12 +101,14 @@
                                      <a :href="post.url" >@{{post.title}}</a>
                                 </li>
                             </ul>
+                            <span class="help is-danger" v-if="blogPosts.length < 1">You need to have a valid feed</span>
                         </div>
                     </div> <!-- Second column -->
                     </div>
                     <div class="columns">
                         <div class="column">
-                        <button type="submit" :class="{'button':true, 'is-large':true, 'is-primary':true, 'is-disabled': formHasErrors}" name="submit" value="Submit">Submit</button>
+                            <button type="submit" :class="{'button':true, 'is-large':true, 'is-primary':true, 'is-disabled': formHasErrors}" name="submit" value="Submit">Submit</button>
+                            <span class="help is-danger" v-if="formHasErrors">You can submit once the errors above are fixed</span>
                         </div>
                     </div>
                 </form>

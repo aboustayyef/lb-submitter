@@ -7,6 +7,7 @@
 x ability to check if submitted blog exists (not necessary - will check at confirmation stage)
 x drag and drop images? (nope, use twitter image)
 
+-- check if blog username is unique
 -- if everything ok, allow to submit blog
 -- when submitted, blog will be added to db, with crawling set to "inactive"
 -- add admin interface to approve submitted blogs

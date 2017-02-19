@@ -964,6 +964,8 @@ var app = new Vue({
 		blogRss: "", // the rss feed of the blog
 		blogRssIsLoading: false, // show the spinner of rss loading	
 		blogPosts: [], // the list of posts
+		blogUsernameIsUnique: true, // Checking to see if blog username is unique. true by default to prevent premature errors
+		blogUsernameIsLoading: false, // spinner for when checking for username
 
 		twitterUsername: null, // Twitter Details: username and Image
 		twitterImageUrl: null, // URL of twitter Image
@@ -975,7 +977,7 @@ var app = new Vue({
 	},
 	computed: {
 		formHasErrors: function formHasErrors() {
-			return this.errors.errors.length > 0;
+			return this.errors.errors.length > 0 || this.blogPosts.length < 1 || this.checkedCategories.length < 1 || this.checkedCategories.length > 2 || !this.blogUsernameIsUnique;
 		}
 	},
 	methods: {
@@ -1013,6 +1015,7 @@ var app = new Vue({
 					_this.blogDetailsEnabled = true;
 					_this.blogTitle = response.data.result.title;
 					_this.blogUniqueWord = response.data.result.domain;
+					_this.checkUsernameUnique();
 					_this.blogDescription = response.data.result.description;
 					_this.blogRss = response.data.result.feed;
 					_this.twitterUsername = '';
@@ -1032,6 +1035,9 @@ var app = new Vue({
 				if (response.data.status == 'ok') {
 					_this2.blogPosts = response.data.finalItems;
 					_this2.blogRssIsLoading = false;
+				} else {
+					_this2.blogRssIsLoading = false;
+					_this2.blogPosts = [];
 				}
 			});
 		},
@@ -1049,6 +1055,24 @@ var app = new Vue({
 					_this3.twitterError = true;
 				}
 				_this3.twitterIsLoading = false;
+			});
+		},
+
+		checkUsernameUnique: function checkUsernameUnique() {
+			var _this4 = this;
+
+			this.blogUsernameIsLoading = true;
+			axios.get('/api/usernameExists?blogId=' + this.blogUniqueWord).then(function (response) {
+				if (response.data.status == 'ok') {
+					if (response.data.result == true) {
+						_this4.blogUsernameIsUnique = false;
+					} else {
+						_this4.blogUsernameIsUnique = true;
+					}
+				} else {
+					// nothing for now
+				}
+				_this4.blogUsernameIsLoading = false;
 			});
 		},
 

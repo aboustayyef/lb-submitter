@@ -44,3 +44,18 @@ Route::get('/api/twitterDetails', function(Request $request){
 	return response()->json($response);
 
 });
+
+Route::get('/api/usernameExists', function (Request $request){
+	
+	$response = new stdClass;
+	try {
+		$exists = \App\Blog::where('blog_id', $request->get('blogId'))->count() > 0;
+		$response->status = 'ok';
+		$response->result = $exists;
+	} catch (\Exception $e) {
+		$response->status = 'error';
+		$response->result = null;
+	}
+	return response()->json($response);
+
+});
