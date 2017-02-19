@@ -30,7 +30,7 @@ let app = new Vue({
 		blogRssIsLoading: false,			// show the spinner of rss loading	
 		blogPosts: [],						// the list of posts
 
-		twitterUsername: "",				// Twitter Details: username and Image
+		twitterUsername: null,				// Twitter Details: username and Image
 		twitterImageUrl: null,				// URL of twitter Image
 		twitterIsLoading: false,			// status of twitter loading spinner
 		twitterError: false,				// if fetching results in non-existing account
@@ -38,7 +38,11 @@ let app = new Vue({
 		categories: categories,				// the list of categories, as imported from categories.js file
 		checkedCategories:["society"]		// an array of categories checked. by default, has society.
 	},
-	
+	computed:{
+		formHasErrors: function(){
+			return this.errors.errors.length > 0;
+		}
+	},
 	methods:{
 		
 		// listening to key events on url field
@@ -75,6 +79,7 @@ let app = new Vue({
 				    this.blogUniqueWord = response.data.result.domain;
 				    this.blogDescription = response.data.result.description;
 				    this.blogRss = response.data.result.feed;
+				    this.twitterUsername = '';
 				    this.getRssContent();
 			    }
 
@@ -116,6 +121,10 @@ let app = new Vue({
 			if (this.checkedCategories.length > 2) {
 				this.checkedCategories.splice(-1,1);
 			}
-		}
+		},
+
+		 validateBeforeSubmit() {
+            
+        }
 	}
 });

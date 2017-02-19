@@ -7,10 +7,12 @@
     "require": {
         "php": ">=5.6.4",
         "guzzlehttp/guzzle": "^6.2",
+        "intervention/image": "^2.3",
         "laravel/framework": "5.4.*",
         "laravel/tinker": "~1.0",
-        "symfony/dom-crawler": "^3.2",
+        "league/flysystem-aws-s3-v3": "^1.0",
         "simplepie/simplepie": "dev-master",
+        "symfony/dom-crawler": "^3.2",
         "thujohn/twitter": "~2.0"
     },
     "require-dev": {
@@ -24,7 +26,8 @@
         ],
         "psr-4": {
             "App\\": "app/"
-        }
+        },
+        "files": ["app/helpers/helperFunctions.php"]
     },
     "autoload-dev": {
         "psr-4": {

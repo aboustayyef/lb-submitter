@@ -19,6 +19,10 @@ Route::get('/', function () {
 
 });
 
+Route::post('/', function(Request $request){
+	return $request->all();
+});
+
 Route::get('/api/urlDetails', function(Request $request){
 
 	$response= new App\UrlAnalyzer($request->get('url'));

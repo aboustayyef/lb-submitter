@@ -26,8 +26,10 @@
             </div>
         </div>
 
-        <div class="section" v-if="blogDetailsEnabled" style="background-color:#f3f3f3">
+        <div class="section" v-show="blogDetailsEnabled" style="background-color:#f3f3f3">
             <div class="container">
+            <form  @submit.prevent="validateBeforeSubmit" action="/" method="POST" name="lbData">
+                {{@csrf_field()}}
                 <h2 class="title is-2">
                     Information about your blog
                 </h2>
@@ -37,8 +39,8 @@
 
                         <label class="label">Twitter Username (without the @)</label>
                         <p :class="{'control':true, 'is-loading': twitterIsLoading}">
-                            <input v-validate="'required|alpha_dash'" :class="{ 'input':true, 'is-danger': errors.has('Twitter Username') || twitterError }" name="Twitter Username" v-model="twitterUsername" type="text" @blur="getTwitterDetails">
-                            <span class="help is-danger" v-if="errors.has('Twitter Username')">@{{ errors.first('Twitter Username') }}</span>
+                            <input v-validate="'required|alpha_dash'" :class="{ 'input':true, 'is-danger': errors.has('twitter') || twitterError }" name="twitter" v-model="twitterUsername" type="text" @blur="getTwitterDetails">
+                            <span class="help is-danger" v-if="errors.has('twitter')">@{{ errors.first('twitter') }}</span>
                         </p>
 
                         <label class="label">Blog Title</label>
@@ -96,6 +98,13 @@
                             </ul>
                         </div>
                     </div> <!-- Second column -->
+                    </div>
+                    <div class="columns">
+                        <div class="column">
+                        <button type="submit" :class="{'button':true, 'is-large':true, 'is-primary':true, 'is-disabled': formHasErrors}" name="submit" value="Submit">Submit</button>
+                        </div>
+                    </div>
+                </form>
                 </div>
 
             </div>
