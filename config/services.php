@@ -38,7 +38,7 @@ return [
     'twitter' => [
         'client_id' => env('TWITTER_CONSUMER_KEY'),
         'client_secret' => env('TWITTER_CONSUMER_SECRET'),
-        'redirect' => 'http://lb-submitter.dev/callback',
+        'redirect' => 'http://lb-submitter.dev/login/twitter/callback',
     ],
 
 ];
