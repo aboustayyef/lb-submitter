@@ -16,7 +16,12 @@ use Illuminate\Http\Request;
 // login with socialte
 Route::get('login/twitter', 'Auth\LoginController@redirectToProvider');
 Route::get('login/twitter/callback', 'Auth\LoginController@handleProviderCallback');
+
 //
+Route::get('admin', function(Request $request){
+	return view('admin');
+})->middleware('twitter');
+
 
 Route::get('/', function () {
     

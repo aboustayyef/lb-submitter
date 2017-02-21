@@ -28,9 +28,9 @@ class LoginController extends Controller
     public function handleProviderCallback()
     {
         $user = Socialite::driver('twitter')->user();
-        return $user->getNickname() . ' - ' . $user->getName() . ' - ' . $user->getId();
-
-        // $user->token;
+        $nickname = $user->getNickname();
+        \Session::put('user', strtolower($nickname));
+        return redirect('/admin');
     }
 }
 
