@@ -60,7 +60,7 @@ let app = new Vue({
 			this.urlButtonIsLoading = true;
 			// clear search field
 			let urlToUse = this.url;
-			this.url = '';
+			// this.url = '';
 
 			// hide details panel if previously existed
 			this.blogDetailsEnabled = false;

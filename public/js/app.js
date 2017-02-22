@@ -998,7 +998,7 @@ var app = new Vue({
 			this.urlButtonIsLoading = true;
 			// clear search field
 			var urlToUse = this.url;
-			this.url = '';
+			// this.url = '';
 
 			// hide details panel if previously existed
 			this.blogDetailsEnabled = false;

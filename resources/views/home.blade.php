@@ -31,6 +31,7 @@
             <form action="/" method="POST" name="lbData">
                 {{@csrf_field()}}
                 <input type="hidden" name="twitterImage" :value="twitterImageUrl">
+                <input type="hidden" name="blog_url" :value="url">
                 <h2 class="title is-2">
                     Information about your blog
                 </h2>

@@ -30,7 +30,11 @@ Route::get('/', function () {
 });
 
 Route::post('/', function(Request $request){
-	return $request->all();
+
+	// store image
+	// email mustapha of new application
+	$processing = new App\InfoProcessor($request->all());
+	return view('thankyou')->with(compact('processing'));
 });
 
 Route::get('/api/urlDetails', function(Request $request){
