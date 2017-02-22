@@ -68,7 +68,7 @@
                         <div class="box">
                             <p class="control" v-for="category in categories">
                               <label class="checkbox">
-                                <input type="checkbox" :value="category.name" @change="guardCategoriesMaximum" v-model="checkedCategories">
+                                <input type="checkbox" :value="category.name" name='blog_tags[]' @change="guardCategoriesMaximum" v-model="checkedCategories">
                                 @{{category.description}}
                               </label>
                             </p>

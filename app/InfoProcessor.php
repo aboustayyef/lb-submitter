@@ -1,25 +1,38 @@
 <?php
 
 namespace App;
-use App\Blog;
+use Image;
 
 class InfoProcessor
 
 {
 
-	public $blog_url, $blog_author_twitter_username, $blog_name, $blog_id, $blog_description, $blog_rss_feed;
+	public $details;
 
 	public function __construct($details)
     {
 
-    	// image processing;
+    	// save twitter image;
+ 		$filename = time().'-'. $details['Unique_Blog_Username'];
+ 		$i = Image::make($details['twitterImage']);
+ 		$i->fit(200,200)->encode('jpg')->save(env('THUMBS_FOLDER').'/'.$filename.'.jpg', 60);
 
-    	// mapping web app structure to lb data structure
-		$this->blog_url = $details['blog_url'];
-		$this->blog_author_twitter_username = $details['twitter'];
-		$this->blog_name = $details['Blog_Title'];
-		$this->blog_id = $details['Unique_Blog_Username'];
-		$this->blog_description = $details['Blog_Description'];
-		$this->blog_rss_feed = $details['RSS'];
+ 		$this->details = [
+ 		'blog_thumb' => $filename,
+		'blog_url' => $details['blog_url'],
+		'blog_author_twitter_username' => $details['twitter'],
+		'blog_tags'	=> implode(',', $details['blog_tags']),
+		'blog_name' => $details['Blog_Title'],
+		'blog_id' => $details['Unique_Blog_Username'],
+		'blog_description' => $details['Blog_Description'],
+		'blog_rss_feed' => $details['RSS'],
+		'blog_RSSCrawl_active' => 0,
+		'reason_for_deactivation' => 'blog not activated yet',
+		'blog_last_post_timestamp'	=> time(),
+		'blog_crawlingType'	=> ' ',
+ 		];
+
+ 		Blog::create($this->details);
+
     }
 }
