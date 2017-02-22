@@ -108,8 +108,10 @@ class UrlAnalyzer
 
 		foreach ($candidates as $candidate) {
 			if (strlen($candidate) > $recordLength) {
-				$result = $candidate;
-				$recordLength = strlen($candidate);
+				if (! in_array($candidate, ['wordpress', 'blogspot'])) {
+					$result = $candidate;
+					$recordLength = strlen($candidate);
+				}
 			}
 		}
 
