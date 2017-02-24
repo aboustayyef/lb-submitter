@@ -7151,3 +7151,7 @@ li {
 .has-space-under {
   margin-bottom: 1.25rem;
 }
+
+.is-hidden {
+  display: hidden;
+}

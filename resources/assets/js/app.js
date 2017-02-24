@@ -15,7 +15,10 @@ Vue.use(VeeValidate);
 let app = new Vue({
 
 	el: "#app",
-
+	mounted: function(){
+		let a = document.getElementsByClassName('is-hidden');
+		Array.from(a).forEach((item) => item.classList.remove('is-hidden'));
+	},
 	data: {
 		url: "", 							// submitted url 
 		urlButtonText: 'Submit', 			// Text shown on the url submit button 

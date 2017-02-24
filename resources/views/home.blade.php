@@ -19,14 +19,14 @@
                 <h1 class="title is-1">Submit your blog!</h1>
                 <p :class="{'control':true, 'is-loading': urlButtonIsLoading }">
                     <input name="Submit" v-validate="'url'" @keyup="updateButton" :class="{'input':true, 'is-danger': errors.has('Submit')}" v-model="url" type="text" :disabled="urlButtonIsLoading" :placeholder="urlButtonIsLoading? 'Loading Details' : 'Enter URL here'">
-                    <span class="help is-danger" v-if="errors.has('Submit')">@{{ errors.first('Submit') }}</span>
+                    <span class="help is-danger is-hidden" v-if="errors.has('Submit')">@{{ errors.first('Submit') }}</span>
                 </p>
                 <button v-if="!urlButtonIsLoading" id="submit1" @click="getUrlDetails" :class="{'button is-primary' : true , 'is-disabled' : errors.has('Submit') || url== '' || url == null}" v-text="urlButtonText" ></button>
                 
             </div>
         </div>
 
-        <div class="section" v-show="blogDetailsEnabled" style="background-color:#f3f3f3">
+        <div id="blogDetails" class="section is-hidden" v-show="blogDetailsEnabled" style="background-color:#f3f3f3">
             <div class="container">
             <form action="/" method="POST" name="lbData">
                 {{@csrf_field()}}

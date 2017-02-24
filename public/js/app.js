@@ -950,7 +950,12 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vee_validate___default.a);
 var app = new Vue({
 
 	el: "#app",
-
+	mounted: function mounted() {
+		var a = document.getElementsByClassName('is-hidden');
+		Array.from(a).forEach(function (item) {
+			return item.classList.remove('is-hidden');
+		});
+	},
 	data: {
 		url: "", // submitted url 
 		urlButtonText: 'Submit', // Text shown on the url submit button 
