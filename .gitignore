@@ -3,6 +3,7 @@
 /public/hot
 /storage/*.key
 /storage/cache/*.*
+/storage/thumbs/*.*
 *.spc
 /vendor
 /.idea
