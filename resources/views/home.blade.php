@@ -13,6 +13,8 @@
         window.Laravel = {csrfToken : '{{csrf_token()}}'};
     </script>
 
+
+
     <div id="app">
         <div class="section">
             <div class="container">
@@ -26,6 +28,10 @@
             </div>
         </div>
 
+
+
+
+
         <div id="blogDetails" class="section is-hidden" v-show="blogDetailsEnabled" style="background-color:#f3f3f3">
             <div class="container">
             <form action="/" method="POST" name="lbData">
@@ -35,15 +41,19 @@
                 <h2 class="title is-2">
                     Information about your blog
                 </h2>
-                <p>Please fill in the information below before submitting</p>
+                <h3 class="subtitle is-4">Please fill in the information below before submitting</h3>
                 <div class="columns">
                     <div class="column"> <!-- First Column -->
 
+
                         <label class="label">Twitter Username (without the @)</label>
+                        <p class="control">You need a twitter account to have your blog listed in Lebanese Blogs. You use it to log in and edit your information and posts</p>
                         <p :class="{'control':true, 'is-loading': twitterIsLoading}">
                             <input v-validate="'required|alpha_dash'" :class="{ 'input':true, 'is-danger': errors.has('twitter') || twitterError }" name="twitter" v-model="twitterUsername" type="text" @blur="getTwitterDetails">
                             <span class="help is-danger" v-if="errors.has('twitter')">@{{ errors.first('twitter') }}</span>
                         </p>
+
+
 
                         <label class="label">Blog Title</label>
                         <p class="control">
@@ -51,18 +61,25 @@
                             <span class="help is-danger" v-if="errors.has('Blog Title')">@{{ errors.first('Blog Title') }}</span>
                         </p>
 
-                        <label class="label">Unique Blog Username</label>
+
+
+                        <label class="label">Your Blog's Username</label>
+                        <p class="control">A unique word that identifies your blog</p>
                         <p :class="{'control':true, 'is-loading': blogUsernameIsLoading}">
-                            <input name="Unique Blog Username" v-validate="'required|min:5|alpha_num'" :class="{ 'input':true, 'is-danger': errors.has('Unique Blog Username') }" v-model="blogUniqueWord" type="text" @blur="checkUsernameUnique">
+                            <input name="Unique Blog Username" v-validate="'required|min:5|alpha_num'" :class="{ 'input':true, 'is-danger': errors.has('Unique Blog Username') }" v-model="blogUniqueWord" type="text" @keyup="checkUsernameUnique" @blur="checkUsernameUnique">
                             <span class="help is-danger" v-if="errors.has('Unique Blog Username')">@{{ errors.first('Unique Blog Username') }}</span>
                             <span class="help is-danger" v-if="! blogUsernameIsUnique">This username is already taken. Please choose another one</span>
                         </p>
+
+
 
                         <label class="label">Blog Description</label>
                         <p class="control">
                           <input name="Blog Description" v-validate="'required|min:10|max:100'" :class="{ 'input':true, 'is-danger': errors.has('Blog Description') }" v-model="blogDescription" type="text">
                           <span class="help is-danger" v-if="errors.has('Blog Description')">@{{ errors.first('Blog Description') }} </span>
                         </p>
+
+
 
                         <label class="label">Pick Categories (Maximum 2)</label>
                         <div class="box">
@@ -86,6 +103,7 @@
                             <h3 class="title is-4">
                                 Your Blog's Feed (RSS)
                             </h3>
+                            <p class="control">All blogs should have this. If you don't know what it is, please look it up on your blog's platform</p>
                             <p class="control has-addons">
                               <input name="RSS" v-validate="'required|url'" :class=" { 'input':true, 'is-expanded':true, 'is-danger': errors.has('RSS')}" v-model="blogRss" type="text" @blur="getRssContent">
                               <a class="button is-info">

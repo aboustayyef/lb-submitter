@@ -950,7 +950,7 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vee_validate___default.a);
 var app = new Vue({
 
 	el: "#app",
-	mounted: function mounted() {
+	created: function created() {
 		var a = document.getElementsByClassName('is-hidden');
 		Array.from(a).forEach(function (item) {
 			return item.classList.remove('is-hidden');
@@ -1022,9 +1022,14 @@ var app = new Vue({
 					_this.blogUniqueWord = response.data.result.domain;
 					_this.checkUsernameUnique();
 					_this.blogDescription = response.data.result.description;
-					_this.blogRss = response.data.result.feed;
+					if (response.data.result.feed) {
+						_this.blogRss = response.data.result.feed;
+					}
+					console.log(_this.blogRss);
 					_this.twitterUsername = '';
-					_this.getRssContent();
+					if (_this.blogRss) {
+						_this.getRssContent();
+					}
 				}
 			}).catch(function (error) {
 				console.log(error);

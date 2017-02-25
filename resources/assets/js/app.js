@@ -15,7 +15,7 @@ Vue.use(VeeValidate);
 let app = new Vue({
 
 	el: "#app",
-	mounted: function(){
+	created: function(){
 		let a = document.getElementsByClassName('is-hidden');
 		Array.from(a).forEach((item) => item.classList.remove('is-hidden'));
 	},
@@ -84,9 +84,14 @@ let app = new Vue({
 				    this.blogUniqueWord = response.data.result.domain;
 				    this.checkUsernameUnique();
 				    this.blogDescription = response.data.result.description;
-				    this.blogRss = response.data.result.feed;
+				    if (response.data.result.feed) {
+					    this.blogRss = response.data.result.feed;
+				    }
+				    console.log(this.blogRss);
 				    this.twitterUsername = '';
-				    this.getRssContent();
+				    if (this.blogRss) {
+					    this.getRssContent();
+				    }
 			    }
 
 			  })
