@@ -33,6 +33,7 @@ class InfoProcessor
  		];
 
  		Blog::create($this->details);
+ 		\Mail::to('mustapha.hamoui@gmail.com')->send(new \App\Mail\ANewBlogHasBeenSubmitted($this->details));
 
     }
 }
