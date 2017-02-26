@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 |
 */
 
+
 // login with socialte
 Route::get('login/twitter', 'Auth\LoginController@redirectToProvider');
 Route::get('login/twitter/callback', 'Auth\LoginController@handleProviderCallback');
@@ -35,7 +36,7 @@ Route::post('/', function(Request $request){
 	// email mustapha of new application
 	$processing = new App\InfoProcessor($request->all());
 
-	return view('thankyou')->with(compact('processing'));
+	return redirect('/thankyou');
 });
 
 Route::get('/api/urlDetails', function(Request $request){
@@ -45,6 +46,9 @@ Route::get('/api/urlDetails', function(Request $request){
 
 });
 
+Route::get('thankyou', function(){
+	return view('thankyou');
+});
 
 Route::get('/api/feedDetails', function(Request $request){
 
