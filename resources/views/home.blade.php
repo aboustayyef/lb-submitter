@@ -14,6 +14,17 @@
     </script>
 
 
+<section class="hero is-primary">
+    <div class="hero-body">
+        <div class="container">
+            <h1 class="title">
+                <a href="http://lebaneseblogs.com">
+                    <img src="https://lebaneseblogs.com/img/logo.png" width="250" height="40">
+                </a>
+            </h1>
+        </div>
+    </div>
+</section>
 
     <div id="app">
         <div class="section">
