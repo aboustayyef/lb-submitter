@@ -3,8 +3,10 @@
 </h1>
 
 <p>
-	Title: {{$details['blog_name']}}<br>
-	URL: {{$details['blog_url']}}<br>
-	twitter: {{$details['blog_author_twitter_username']}}
+	@foreach($details as $key => $detail)
+	{{$key}}: {{$detail}}<br/>
+	@endforeach
+
+	Click <a href="{{env('APP_ROOT_URL')}}/approve?blogId={{$details['blog_id']}}&token={{md5($details['blog_rss_feed'])}}_{{$details['id']}}">here</a> to approve this blog
 </p>
 		

@@ -30,6 +30,9 @@ Route::get('/', function () {
 
 });
 
+// route for administrator to approve via link in email
+Route::get('approve', 'ApprovementController@check');
+
 Route::post('/', function(Request $request){
 
 	// return $request->all();

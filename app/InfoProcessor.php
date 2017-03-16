@@ -33,7 +33,10 @@ class InfoProcessor
  		];
 
  		Blog::create($this->details);
+ 		$blog = Blog::where('blog_id', $this->details['blog_id'])->first();
+ 		$this->details['id'] = $blog->id;
  		\Mail::to('mustapha.hamoui@gmail.com')->send(new \App\Mail\ANewBlogHasBeenSubmitted($this->details));
+
 
     }
 }
