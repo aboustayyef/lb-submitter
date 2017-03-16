@@ -19,6 +19,9 @@ body{
 		max-width:800px;
 		margin: 2em auto;
 	}
+	a{
+		color: rgb(160, 22, 32);
+	}
 	p{
 		color: #555;
 	}
@@ -37,7 +40,7 @@ body{
 
 <div id="wrapper">
 	<h1>Thank You!</h1>
-	<p>Your blog has been submitted. If it fits the requirements, it will be activated within a few days</p>
+	<p>Your blog has been submitted. If it fits <a href="https://lebaneseblogs.com/about/submit">the requirements</a>, it will be activated within a few days</p>
 	<a href="http://lebaneseblogs.com" class="button">Go To Lebanese Blogs</a>
 </div>
 
