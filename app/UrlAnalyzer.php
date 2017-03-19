@@ -55,7 +55,8 @@ class UrlAnalyzer
 	}
 
 	private function urlIsValid($url){
-		return preg_match('/^(https?:\/\/)?([\da-z\.-]+\.[a-z\.]{2,6}|[\d\.]+)([\/:?=&#]{1}[\da-z\.-]+)*[\/\?]?$/i', $url);
+		return true;
+		// return preg_match('/^(https?:\/\/)?([\da-z\.-]+\.[a-z\.]{2,6}|[\d\.]+)([\/:?=&#]{1}[\da-z\.-]+)*[\/\?]?$/i', $url);
 	}
 
 	private function abort($message){
